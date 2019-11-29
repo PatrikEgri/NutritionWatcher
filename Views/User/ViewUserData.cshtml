@@ -1,0 +1,44 @@
+﻿@model NutritionWatcher.Models.UserModel
+@{
+    ViewBag.Title = "ViewUserData";
+}
+
+<div>
+    @ViewBag.Error
+    <table>
+        <tr>
+            <td>@Model.Username</td>
+            <td>@Html.ActionLink("Felhasználónév módosítása", "UpdateUsername")</td>
+        </tr>
+        <tr>
+            <td>@Model.Firstname</td>
+            <td>@Html.ActionLink("Név módosítása", "UpdateName")</td>
+        </tr>
+        <tr>
+            <td>@Model.Lastname</td>
+            <td>@Html.ActionLink("Név módosítása", "UpdateName")</td>
+        </tr>
+        <tr>
+            <td>@Model.Email</td>
+            <td>@Html.ActionLink("E-Mail módosítása", "UpdateEmail")</td>
+        </tr>
+        <tr>
+            <td>@Model.Style.Name</td>
+            <td>@Html.ActionLink("Stílus módosítása", "UpdateStyle")</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                @using (Html.BeginForm("UpdatePassword", "User", null, FormMethod.Post, new { }))
+                {
+                    <input name="send" class="" value="Jelszó módosítása" type="submit" />
+                }
+            </td>
+        </tr>
+    </table>
+    <div>
+        @using (Html.BeginForm("DeleteUser", "User", null, FormMethod.Post, new { }))
+        {
+            <input name="send" class="" value="Fiók megszűntetése" type="submit"/>
+        }
+    </div>
+</div>

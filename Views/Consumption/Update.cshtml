@@ -1,0 +1,20 @@
+﻿@model NutritionWatcher.Models.ConsumptionModel
+@{
+    ViewBag.Title = "Update";
+}
+
+    <div>
+        @using (Html.BeginForm("UpdateDataBase", "Consumption", null, FormMethod.Post, new { }))
+        {
+            @Html.LabelFor(x => x.Date)
+            @Html.TextBoxFor(x => x.Date, "{0:yyyy-MM-dd}")
+
+            @Html.LabelFor(x => x.Time)
+            @Html.TextBoxFor(x => x.Time, "{0:HH:mm}")
+
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.UserId)
+
+            <input name="send" type="submit" class="" value="Módosítás"/>
+        }
+    </div>

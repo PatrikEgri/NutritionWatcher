@@ -1,0 +1,49 @@
+﻿@model NutritionWatcher.Models.SummaryViewModel
+@{
+    ViewBag.Title = "Summary";
+}
+
+<div>
+    @* -- Napi -- *@
+    <div>
+        @if (Model.ConsumptionModels.ToList().Any(x => x.Date.Equals(DateTime.Today.ToString("yyyy-MM-dd")))) {
+        <h4>Napi összegzés</h4>
+        <table>
+            <tr>
+                <td>Kalóriafogyasztás</td>
+                <td>@Model.CalorieViewModels.ToList().FindAll(x => x.Consumption.Date.Equals(DateTime.Today.ToString("yyyy-MM-dd"))).AsQueryable().Sum(x => x.GetConsumedCalorie())</td>
+            </tr>
+            <tr>
+                <td>Fehérjefogyasztás</td>
+                <td>@Model.CalorieViewModels.ToList().FindAll(x => x.Consumption.Date.Equals(DateTime.Today.ToString("yyyy-MM-dd"))).AsQueryable().Sum(x => x.GetConsumedProtein())</td>
+            </tr>
+            <tr>
+                <td>Zsírfogyasztás</td>
+                <td>@Model.CalorieViewModels.ToList().FindAll(x => x.Consumption.Date.Equals(DateTime.Today.ToString("yyyy-MM-dd"))).AsQueryable().Sum(x => x.GetConsumedFat())</td>
+            </tr>
+            <tr>
+                <td>Szénhidrátfogyasztás</td>
+                <td>@Model.CalorieViewModels.ToList().FindAll(x => x.Consumption.Date.Equals(DateTime.Today.ToString("yyyy-MM-dd"))).AsQueryable().Sum(x => x.GetConsumedHydrocarbonate())</td>
+            </tr>
+            <tr>
+                <td>Étkezések száma</td>
+                <td>@Model.ConsumptionModels.ToList().FindAll(x => x.Date.Equals(DateTime.Today.ToString("yyyy-MM-dd"))).Count</td>
+            </tr>
+        </table>
+        }
+        else
+        {
+            <h5>A mai napon még nem rögzítettél fogyasztást</h5>
+        }
+    </div>
+    @* -- Heti -- *@
+    <div>
+        <h4>Heti összegzés</h4>
+        <table>
+
+        </table>
+    </div>
+    @* -- Havi -- *@
+    <div></div>
+</div>
+

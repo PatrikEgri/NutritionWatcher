@@ -1,0 +1,84 @@
+﻿@model IEnumerable<NutritionWatcher.Models.ConsumptionModel>
+@{
+    ViewBag.Title = "MealCount";
+}
+
+<div>
+    @* -- Napi -- *@
+    <div>
+        <h4>A mai napon rögzített étkezések száma</h4>
+        @if (Model.Any(x => x.Date.Equals(DateTime.Today.ToString("yyyy-MM-dd"))))
+        {
+            <table>
+                <tr>
+                    <th>Nap</th>
+                    <th>Idő</th>
+                </tr>
+                @foreach (var cvm in Model.ToList().FindAll(x => x.Date.Equals(DateTime.Today.ToString("yyyy-MM-dd"))))
+                {
+                    <tr>
+                        <td>@cvm.Date</td>
+                        <td>@cvm.Time</td>
+                    </tr>
+                }
+            </table>
+            <h5>A mai nap étkezéseinek száma: @Model.ToList().FindAll(x => x.Date.Equals(DateTime.Today.ToString("yyyy-MM-dd"))).Count</h5>
+        }
+        else
+        {
+            <h5>A mai napon még nem rögzítettél étkezést</h5>
+        }
+    </div>
+    @* -- Heti -- *@
+    <div>
+        <h4>Az elmúlt héten rögzített étkezések száma</h4>
+        @if (Model.Any(x => x.IsThisWeek()))
+        {
+            <table>
+                <tr>
+                    <th>Nap</th>
+                    <th>Étkezések száma</th>
+                </tr>
+                @foreach (var cvm in Model.ToList().FindAll(x => x.IsThisWeek()).AsQueryable().GroupBy(x => x.Date))
+                {
+                    <tr>
+                        <td>@cvm.Key</td>
+                        <td>@cvm.Count()</td>
+                    </tr>
+                }
+            </table>
+            <h5>Az elmúlt hét étkezéseinek száma: @Model.ToList().FindAll(x => x.IsThisWeek()).Count</h5>
+            <h5>Az elmúlt hét étkezései számának átlaga: @Model.ToList().FindAll(x => x.IsThisWeek()).AsQueryable().GroupBy(x => x.Date).Average(x => x.Count())</h5> @* Ezt még ellenőrizni kell! *@
+        }
+        else
+        {
+            <h5>Az elmúlt héten még nem rögzítettél étkezést</h5>
+        }
+    </div>
+    @* -- Havi -- *@
+    <div>
+        <h4>Az elmúlt hónap rögzített étkezések száma</h4>
+        @if (Model.Any(x => x.IsThisMonth()))
+        {
+            <table>
+                <tr>
+                    <th>Nap</th>
+                    <th>Étkezések száma</th>
+                </tr>
+                @foreach (var cvm in Model.ToList().FindAll(x => x.IsThisMonth()).AsQueryable().GroupBy(x => x.Date))
+                {
+                    <tr>
+                        <td>@cvm.Key</td>
+                        <td>@cvm.Count()</td>
+                    </tr>
+                }
+            </table>
+            <h5>Az elmúlt hónap étkezéseinek száma: @Model.ToList().FindAll(x => x.IsThisMonth()).Count</h5>
+            <h5>Az elmúlt hónap étkezései számának átlaga: @Model.ToList().FindAll(x => x.IsThisMonth()).AsQueryable().GroupBy(x => x.Date).Average(x => x.Count())</h5> @* Ezt még ellenőrizni kell! *@
+        }
+        else
+        {
+            <h5>Az elmúlt hónapban még nem rögzítettél étkezést</h5>
+        }
+    </div>
+</div>

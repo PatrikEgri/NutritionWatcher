@@ -1,0 +1,29 @@
+﻿@model IEnumerable<NutritionWatcher.Models.FoodModel>
+@{
+    ViewBag.Title = "Ételek megtekintése";
+}
+
+<div>
+    <table>
+        <tr>
+            <th>Név</th>
+            <th>Fehérje</th>
+            <th>Zsír</th>
+            <th>Szénhidrát</th>
+            <th>Mennyi grammban?</th>
+        </tr>
+        @{ 
+            foreach (NutritionWatcher.Models.FoodModel x in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(x.Name, "ViewFood", new { x.Id })</td>
+                    <td>@x.Protein</td>
+                    <td>@x.Fat</td>
+                    <td>@x.Hydrocarbonate</td>
+                    <td>@x.Gramm</td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+

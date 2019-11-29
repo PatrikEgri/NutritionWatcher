@@ -1,0 +1,25 @@
+﻿@model NutritionWatcher.Models.FoodModel
+@{
+    ViewBag.Title = Model.Name + " megtekintése";
+}
+
+<div>
+    <ul>
+        <li>@Model.Name</li>
+        <li>@Model.Protein</li>
+        <li>@Model.Fat</li>
+        <li>@Model.Hydrocarbonate</li>
+        <li>@Model.Gramm</li>
+    </ul>
+    <div>
+        @using (Html.BeginForm("Update", "Food", new { id = Model.Id }, FormMethod.Post, new { @class="" }))
+        {
+            <input type="submit" name="send" class="" value="Módosítás"/>
+        }
+        @using (Html.BeginForm("Delete", "Food", new { Model.Id }, FormMethod.Post, new { @class="" }))
+        {
+            <input type="submit" name="send" class="" value="Törlés"/>
+        }
+    </div>
+</div>
+

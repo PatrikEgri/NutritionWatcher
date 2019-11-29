@@ -1,0 +1,17 @@
+﻿@model NutritionWatcher.Models.FoodModel
+@{
+    ViewBag.Title = Model.Name + " törlése";
+}
+
+<div>
+    @using (Html.BeginForm("DeleteDataBase", "Food", new { id = Model.Id}, FormMethod.Post, new { }))
+    {
+        <h1>Biztosan törölni szeretnéd a(z) @Model.Name nevű ételt?</h1>
+        <div>
+            <input type="submit" name="send" class="" value="Törlés"/>
+        </div>
+        <div>
+            <a href="@Url.Action("ViewFood", "Food", new { id = Model.Id })">Mégse</a>
+        </div>
+    }
+</div>

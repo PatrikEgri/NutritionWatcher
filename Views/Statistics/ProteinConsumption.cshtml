@@ -1,0 +1,89 @@
+﻿@model IEnumerable<NutritionWatcher.Models.CalorieViewModel>
+@{
+    ViewBag.Title = "ProteinConsumption";
+}
+
+<div>
+    @* -- Napi -- *@
+    <div>
+        <h4>A mai napon bevitt fehérje</h4>
+        @if (Model.Any(x => x.Consumption.Date == DateTime.Today.ToString("yyyy-MM-dd")))
+        {
+            <table>
+                <tr>
+                    <th>Idő</th>
+                    <th>Bevitt fehérje</th>
+                </tr>
+                @foreach (NutritionWatcher.Models.CalorieViewModel cvm in Model)
+                {
+                    if (cvm.Consumption.Date == DateTime.Today.ToString("yyyy-MM-dd"))
+                    {
+                        <tr>
+                            <td>@cvm.Consumption.Time</td>
+                            <td>@cvm.GetConsumedProtein()</td>
+                        </tr>
+                    }
+                }
+            </table>
+            <h5>Összesen bevitt fehérje: @Model.AsQueryable().Sum(x => x.GetConsumedProtein())</h5>
+        }
+        else
+        {
+            <h5>A mai napon még nem rögzítettél fogyasztást!</h5>
+        }
+    </div>
+    @* -- Heti -- *@
+    <div>
+        <h4>Az elmúlt héten bevitt fehérje</h4>
+        @if (Model.Any(x => x.IsThisWeek()))
+        {
+            <table>
+                <tr>
+                    <th>Nap</th>
+                    <th>Bevitt fehérje</th>
+                </tr>
+                @foreach (var cvm in Model.ToList().FindAll(x => x.IsThisWeek()).AsQueryable().GroupBy(x => x.Consumption.Date))
+                {
+                    <tr>
+                        <td>@cvm.Key</td>
+                        <td>@cvm.Sum(x => x.GetConsumedProtein())</td>
+                    </tr>
+                }
+            </table>
+            <h5>Összesen bevitt fehérje: @Model.ToList().FindAll(x => x.IsThisWeek()).AsQueryable().Sum(x => x.GetConsumedProtein())</h5>
+            <h5>Átlagosan bevitt fehérje: @Model.ToList().FindAll(x => x.IsThisWeek()).AsQueryable().Average(x => x.GetConsumedProtein())</h5>
+        }
+        else
+        {
+            <h5>Ezen a héten még nem rögzítettél fogyasztást!</h5>
+        }
+    </div>
+    @* -- Havi -- *@
+    <div>
+        <h4>Az elmúlt hónapban bevitt fehérje</h4>
+        @if (Model.Any(x => x.IsThisMonth()))
+        {
+            <table>
+                <tr>
+                    <th>Nap</th>
+                    <th>Bevitt fehérje</th>
+                </tr>
+                @foreach (var cvm in Model.ToList().FindAll(x => x.IsThisMonth()).AsQueryable().GroupBy(x => x.Consumption.Date))
+                {
+                    <tr>
+                        <td>@cvm.Key</td>
+                        <td>@cvm.Sum(x => x.GetConsumedProtein())</td>
+                    </tr>
+                }
+            </table>
+            <h5>Összesen bevitt fehérje: @Model.ToList().FindAll(x => x.IsThisMonth()).AsQueryable().Sum(x => x.GetConsumedProtein())</h5>
+            <h5>Átlagosan bevitt fehérje: @Model.ToList().FindAll(x => x.IsThisMonth()).AsQueryable().Average(x => x.GetConsumedProtein())</h5>
+
+        }
+        else
+        {
+            <h5>Ebben a hónapban még nem rögzítettél fogyasztást!</h5>
+        }
+    </div>
+</div>
+

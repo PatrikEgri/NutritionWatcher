@@ -1,0 +1,26 @@
+﻿@model NutritionWatcher.Models.ConsumptionAssignmentViewModel
+@{
+    ViewBag.Title = "Assignment";
+}
+
+<div>
+    @using (Html.BeginForm("AssignmentDataBase", "Consumption", null, FormMethod.Post, new { }))
+    {
+        @Html.LabelFor(x => x.Foods)
+        @Html.DropDownListFor(x => x.FoodId,
+            new SelectList(Model.Foods, "Id", "Name"),
+            "Válassz a listából!", new { })
+        
+
+        @Html.LabelFor(x => x.Consumptions)
+        @Html.DropDownListFor(x => x.ConsumptionId,
+            new SelectList(Model.Consumptions, "Id", "Date"),
+            "Válassz a listából!", new { })
+
+        @Html.LabelFor(x => x.Gramm)
+        @Html.TextBoxFor(x => x.Gramm)
+
+        <input class="" name="send" type="submit" value="Hozzárendelés"/>
+    }
+</div>
+

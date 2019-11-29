@@ -1,0 +1,19 @@
+﻿@model NutritionWatcher.Models.UserModel
+@{
+    ViewBag.Title = "UpdateName";
+}
+
+<div>
+    @using (Html.BeginForm("UpdateNameDb", "User", null, FormMethod.Post, new { }))
+    {
+        @Html.LabelFor(x => x.Firstname)
+        @Html.TextBoxFor(x => x.Firstname)
+
+        @Html.LabelFor(x => x.Lastname)
+        @Html.TextBoxFor(x => x.Lastname)
+
+        @Html.HiddenFor(x => x.Id)
+        <input name="send" class="" value="Módosítás" type="submit"/>
+    }
+</div>
+

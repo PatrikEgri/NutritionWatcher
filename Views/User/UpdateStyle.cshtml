@@ -1,0 +1,17 @@
+﻿@model NutritionWatcher.Models.UpdateStyleViewModel
+@{
+    ViewBag.Title = "UpdateStyle";
+}
+
+<div>
+    @using (Html.BeginForm("UpdateStyleDB", "User", null, FormMethod.Post, new { }))
+    {
+        @Html.LabelFor(x => x.Styles)
+        @Html.DropDownListFor(x => x.StyleId,
+            new SelectList(Model.Styles, "Id", "Name"), "Válasszon egy elemet!", null)
+
+        @Html.HiddenFor(x => x.UserId)
+        <input name="send" value="Módosítás" class="" type="submit"/>
+    }
+</div>
+

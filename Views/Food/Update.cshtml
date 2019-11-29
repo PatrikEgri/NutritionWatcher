@@ -1,0 +1,29 @@
+﻿@model NutritionWatcher.Models.FoodModel
+@{
+    string a = Model.Name;
+    ViewBag.Title = Model.Name + " módosítása";
+}
+
+<div>
+    @using (Html.BeginForm("UpdateDataBase", "Food", null, FormMethod.Post, new { }))
+    {
+        @Html.LabelFor(x => x.Name)
+        @Html.TextBoxFor(x => x.Name)
+
+        @Html.LabelFor(x => x.Protein)
+        @Html.TextBoxFor(x => x.Protein)
+
+        @Html.LabelFor(x => x.Fat)
+        @Html.TextBoxFor(x => x.Fat)
+
+        @Html.LabelFor(x => x.Hydrocarbonate)
+        @Html.TextBoxFor(x => x.Hydrocarbonate)
+
+        @Html.LabelFor(x => x.Gramm)
+        @Html.TextBoxFor(x => x.Gramm)
+
+        @Html.HiddenFor(x => x.Id)
+        <input type="submit" name="send" class="" value="Módosítás"/>
+    }
+</div>
+

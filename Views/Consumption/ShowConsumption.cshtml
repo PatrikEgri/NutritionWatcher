@@ -1,0 +1,22 @@
+﻿@model NutritionWatcher.Models.ConsumptionModel
+@{
+    ViewBag.Title = "ShowConsumption";
+}
+
+<div>
+    <ul>
+        <li>@Model.Date.ToString("yyyy-MM-dd")</li>
+        <li>@Model.Time.ToString("HH:mm")</li>
+    </ul>
+    <div>
+        @using (Html.BeginForm("Update", "Consumption", new { id = Model.Id }, FormMethod.Post, new { @class = "" }))
+        {
+            <input type="submit" name="send" class="" value="Módosítás" />
+        }
+        @using (Html.BeginForm("Delete", "Consumption", new { id = Model.Id }, FormMethod.Post, new { @class = "" }))
+        {
+            <input type="submit" name="send" class="" value="Törlés" />
+        }
+    </div>
+</div>
+

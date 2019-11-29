@@ -1,0 +1,27 @@
+﻿@model NutritionWatcher.Models.FoodModel
+@{
+    ViewBag.Title = "Új étel létrehozása";
+}
+
+<div>
+    @using (Html.BeginForm("Insert", "Food", new { }, FormMethod.Post, new { }))
+    {
+        @Html.LabelFor(x => x.Name)
+        @Html.TextBoxFor(x => x.Name)
+
+        @Html.LabelFor(x => x.Protein)
+        @Html.TextBoxFor(x => x.Protein)
+
+        @Html.LabelFor(x => x.Fat)
+        @Html.TextBoxFor(x => x.Fat)
+
+        @Html.LabelFor(x => x.Hydrocarbonate)
+        @Html.TextBoxFor(x => x.Hydrocarbonate)
+
+        @Html.LabelFor(x => x.Gramm)
+        @Html.TextBoxFor(x => x.Gramm)
+
+        <input type="submit" name="send" class="" value="Létrehozás" />
+    }
+</div>
+

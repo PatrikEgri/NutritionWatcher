@@ -1,0 +1,14 @@
+﻿@model NutritionWatcher.Models.UserModel
+@{
+    ViewBag.Title = "DeleteUser";
+}
+
+<div>
+    @using (Html.BeginForm("DeleteUserDB", "User", new { userId = Model.Id }, FormMethod.Post, new { }))
+    {
+        <h1>Arra készül, hogy megszűnteti a felhasználói fiókját! Biztosan folytatja?</h1>
+        @Html.ActionLink("Mégse", "ViewUserData")
+        <input name="send" class="" type="submit" value="Fiók megszűntetése"/>
+    }
+</div>
+

@@ -1,0 +1,18 @@
+﻿@model NutritionWatcher.Models.ConsumptionModel
+@{
+    ViewBag.Title = "Insert";
+}
+
+<div>
+    @using (Html.BeginForm("InsertDataBase", "Consumption", null, FormMethod.Post, new { }))
+    {
+        @Html.LabelFor(x => x.Date)
+        @Html.TextBoxFor(x => x.Date, "{0:yyyy-MM-dd}")
+
+        @Html.LabelFor(x => x.Time)
+        @Html.TextBoxFor(x => x.Time, "{0:HH:mm}")
+
+        <input name="send" class="" value="Létrehozás" type="submit"/>
+    }
+</div>
+

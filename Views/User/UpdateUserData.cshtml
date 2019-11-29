@@ -1,0 +1,13 @@
+﻿@model NutritionWatcher.Models.UserModel
+@{
+    ViewBag.Title = "UpdateUserData";
+}
+
+<div>
+    @using (Html.BeginForm("UpdateDataBase", "User", null, FormMethod.Post, new { }))
+    {
+        @Html.LabelFor(x => x.Username)
+        @Html.TextBoxFor(x => x.Username)
+    }
+</div>
+

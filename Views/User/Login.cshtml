@@ -1,0 +1,18 @@
+﻿@model NutritionWatcher.Models.UserModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<div>
+    @using (Html.BeginForm("LoginDB", "User", null, FormMethod.Post, new { }))
+    {
+        @Html.LabelFor(x => x.Username)
+        @Html.TextBoxFor(x => x.Username)
+
+        @Html.LabelFor(x => x.Password)
+        @Html.PasswordFor(x => x.Password)
+
+        <input name="send" value="Belépés" class="" type="submit"/>
+    }
+</div>
+
