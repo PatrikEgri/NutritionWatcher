@@ -1,0 +1,31 @@
+﻿@model NutritionWatcher.Models.SummaryViewModel
+@{
+    ViewBag.Title = "SummaryByDate";
+}
+
+<div>
+    <h4>@Model.ConsumptionModels[0].Date napi összegzése</h4>
+    <table>
+        <tr>
+            <td>Kalóriafogyasztás</td>
+            <td>@Model.CalorieViewModels.AsQueryable().Sum(x => x.GetConsumedCalorie())</td>
+        </tr>
+        <tr>
+            <td>Fehérjefogyasztás</td>
+            <td>@Model.CalorieViewModels.AsQueryable().Sum(x => x.GetConsumedProtein())</td>
+        </tr>
+        <tr>
+            <td>Zsírfogyasztás</td>
+            <td>@Model.CalorieViewModels.AsQueryable().Sum(x => x.GetConsumedFat())</td>
+        </tr>
+        <tr>
+            <td>Szénhidrátfogyasztás</td>
+            <td>@Model.CalorieViewModels.AsQueryable().Sum(x => x.GetConsumedHydrocarbonate())</td>
+        </tr>
+        <tr>
+            <td>Étkezések száma</td>
+            <td>@Model.ConsumptionModels.Count</td>
+        </tr>
+    </table>
+</div>
+

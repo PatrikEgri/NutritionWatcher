@@ -457,7 +457,6 @@ namespace NutritionWatcher.Models
                 return null;
             }
         }
-
         public bool InsertConsumption(ConsumptionModel consumption, int userId)
         {
             try
@@ -633,6 +632,88 @@ namespace NutritionWatcher.Models
             catch (SqlException)
             {
                 return false;
+            }
+        }
+
+        public List<ConsumptionModel> GetConsumptionsByDate(int userId, string date)
+        {
+            List<ConsumptionModel> consumptions = new List<ConsumptionModel>();
+
+            try
+            {
+                _connection.Open();
+
+                SqlCommand cmd = new SqlCommand($"SELECT * FROM Consumption WHERE owner = {userId} AND date LIKE '{date}'", _connection);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    consumptions.Add(new ConsumptionModel
+                    {
+                        Id = reader.GetInt32(0),
+                        Date = reader.GetDateTime(1).ToString("yyyy-MM-dd"),
+                        Time = new DateTime(1, 1, 1, reader.GetTimeSpan(2).Hours, reader.GetTimeSpan(2).Minutes, 0).ToString("HH:mm"),
+                        UserId = reader.GetInt32(3)
+                    });
+                }
+
+                _connection.Close();
+
+                return consumptions;
+            }
+            catch (SqlException)
+            {
+                return null;
+            }
+        }
+        
+        public List<CalorieViewModel> GetCalorieViewModelsByDate(int userId, string date)
+        {
+            try
+            {
+                List<CalorieViewModel> calorieViewModels = new List<CalorieViewModel>();
+
+                _connection.Open();
+
+                SqlCommand cmd = new SqlCommand("SELECT Food.id, Food.name, Food.protein, Food.fat, Food.hydrocarbonate, Food.gramm, " +
+                                                "Consumption.id, Consumption.date, Consumption.time, " +
+                                                "Food_Consumption.id, Food_Consumption.gramm " +
+                                                "FROM (Food INNER JOIN Food_Consumption ON Food.id = Food_Consumption.food) " +
+                                                "INNER JOIN Consumption ON Food_Consumption.consumption = Consumption.id " +
+                                                $"WHERE Consumption.owner = {userId} AND Consumption.date LIKE '{date}'", _connection);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    calorieViewModels.Add(new CalorieViewModel
+                    {
+                        Food = new FoodModel
+                        {
+                            Id = reader.GetInt32(0),
+                            Name = reader.GetString(1),
+                            Protein = reader.GetFloat(2),
+                            Fat = reader.GetFloat(3),
+                            Hydrocarbonate = reader.GetFloat(4),
+                            Gramm = reader.GetInt32(5)
+                        },
+                        Consumption = new ConsumptionModel
+                        {
+                            Id = reader.GetInt32(6),
+                            Date = reader.GetDateTime(7).ToString("yyyy-MM-dd"),
+                            Time = reader.GetDateTime(8).ToString("HH:mm")
+                        },
+                        Id = reader.GetInt32(9),
+                        ConsumedGramms = reader.GetInt32(10)
+                    });
+                }
+
+                _connection.Close();
+
+                return calorieViewModels;
+            }
+            catch (SqlException)
+            {
+                return null;
             }
         }
 

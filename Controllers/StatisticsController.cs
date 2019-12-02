@@ -94,10 +94,30 @@ namespace NutritionWatcher.Controllers
                 ConsumptionModels = db.GetConsumptions((int)Session["User"])
             }; 
         
-            if (viewModel != null)
+            if (viewModel.CalorieViewModels != null && viewModel.ConsumptionModels != null)
             {
                 ViewBag.Error = null;
                 return View(viewModel);
+            }
+            else
+            {
+                ViewBag.Error = "Adatbázis hiba történt!";
+                return RedirectToAction("Index", "Home");
+            }
+        }
+
+        public ActionResult SummaryByDate(string date)
+        {
+            SummaryViewModel vm = new SummaryViewModel
+            {
+                CalorieViewModels = db.GetCalorieViewModelsByDate((int)Session["User"], date),
+                ConsumptionModels = db.GetConsumptionsByDate((int)Session["User"], date)
+            };
+
+            if (vm.CalorieViewModels != null && vm.ConsumptionModels != null)
+            {
+                ViewBag.Error = null;
+                return View(vm);
             }
             else
             {

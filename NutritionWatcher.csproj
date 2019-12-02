@@ -205,6 +205,7 @@
     <Content Include="Views\Statistics\HydrocarbonateConsumption.cshtml" />
     <Content Include="Views\Statistics\MealCount.cshtml" />
     <Content Include="Views\Statistics\Summary.cshtml" />
+    <Content Include="Views\Statistics\SummaryByDate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

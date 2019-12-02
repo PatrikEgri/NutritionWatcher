@@ -38,12 +38,78 @@
     </div>
     @* -- Heti -- *@
     <div>
+        @if (Model.ConsumptionModels.ToList().Any(x => x.IsThisWeek())) {
         <h4>Heti összegzés</h4>
         <table>
-
+            <tr>
+                <td>Kalóriafogyasztás</td>
+                <td>@Model.CalorieViewModels.ToList().FindAll(x => x.IsThisWeek()).AsQueryable().Sum(x => x.GetConsumedCalorie())</td>
+                <td>@Model.CalorieViewModels.ToList().FindAll(x => x.IsThisWeek()).AsQueryable().Average(x => x.GetConsumedCalorie())</td>
+            </tr>
+            <tr>
+                <td>Fehérjefogyasztás</td>
+                <td>@Model.CalorieViewModels.ToList().FindAll(x => x.IsThisWeek()).AsQueryable().Sum(x => x.GetConsumedProtein())</td>
+                <td>@Model.CalorieViewModels.ToList().FindAll(x => x.IsThisWeek()).AsQueryable().Average(x => x.GetConsumedProtein())</td>
+            </tr>
+            <tr>
+                <td>Zsírfogyasztás</td>
+                <td>@Model.CalorieViewModels.ToList().FindAll(x => x.IsThisWeek()).AsQueryable().Sum(x => x.GetConsumedFat())</td>
+                <td>@Model.CalorieViewModels.ToList().FindAll(x => x.IsThisWeek()).AsQueryable().Average(x => x.GetConsumedFat())</td>
+            </tr>
+            <tr>
+                <td>Szénhidrátfogyasztás</td>
+                <td>@Model.CalorieViewModels.ToList().FindAll(x => x.IsThisWeek()).AsQueryable().Sum(x => x.GetConsumedHydrocarbonate())</td>
+                <td>@Model.CalorieViewModels.ToList().FindAll(x => x.IsThisWeek()).AsQueryable().Average(x => x.GetConsumedHydrocarbonate())</td>
+            </tr>
+            <tr>
+                <td>Étkezések száma</td>
+                <td>@Model.ConsumptionModels.ToList().FindAll(x => x.IsThisWeek()).Count</td>
+                <td>@Model.ConsumptionModels.ToList().FindAll(x => x.IsThisWeek()).AsQueryable().GroupBy(x => x.Date).Average(x => x.Count())</td>
+            </tr>
         </table>
+        }
+        else
+        {
+            <h5>Ezen a héten még nem rögzítettél fogyasztást</h5>
+        }
     </div>
     @* -- Havi -- *@
-    <div></div>
+    <div>
+        @if (Model.ConsumptionModels.ToList().Any(x => x.IsThisMonth()))
+        {
+        <h4>Havi összegzés</h4>
+        <table>
+            <tr>
+                <td>Kalóriafogyasztás</td>
+                <td>@Model.CalorieViewModels.ToList().FindAll(x => x.IsThisMonth()).AsQueryable().Sum(x => x.GetConsumedCalorie())</td>
+                <td>@Model.CalorieViewModels.ToList().FindAll(x => x.IsThisMonth()).AsQueryable().Average(x => x.GetConsumedCalorie())</td>
+            </tr>
+            <tr>
+                <td>Fehérjefogyasztás</td>
+                <td>@Model.CalorieViewModels.ToList().FindAll(x => x.IsThisMonth()).AsQueryable().Sum(x => x.GetConsumedProtein())</td>
+                <td>@Model.CalorieViewModels.ToList().FindAll(x => x.IsThisMonth()).AsQueryable().Average(x => x.GetConsumedProtein())</td>
+            </tr>
+            <tr>
+                <td>Zsírfogyasztás</td>
+                <td>@Model.CalorieViewModels.ToList().FindAll(x => x.IsThisMonth()).AsQueryable().Sum(x => x.GetConsumedFat())</td>
+                <td>@Model.CalorieViewModels.ToList().FindAll(x => x.IsThisMonth()).AsQueryable().Average(x => x.GetConsumedFat())</td>
+            </tr>
+            <tr>
+                <td>Szénhidrátfogyasztás</td>
+                <td>@Model.CalorieViewModels.ToList().FindAll(x => x.IsThisMonth()).AsQueryable().Sum(x => x.GetConsumedHydrocarbonate())</td>
+                <td>@Model.CalorieViewModels.ToList().FindAll(x => x.IsThisMonth()).AsQueryable().Average(x => x.GetConsumedHydrocarbonate())</td>
+            </tr>
+            <tr>
+                <td>Étkezések száma</td>
+                <td>@Model.ConsumptionModels.ToList().FindAll(x => x.IsThisMonth()).Count</td>
+                <td>@Model.ConsumptionModels.ToList().FindAll(x => x.IsThisMonth()).AsQueryable().GroupBy(x => x.Date).Average(x => x.Count())</td>
+            </tr>
+        </table>
+        }
+        else
+        {
+            <h5>Ebben a hónapban még nem rögzítettél fogyasztást</h5>
+        }
+    </div>
 </div>
 
