@@ -1,30 +1,30 @@
 ﻿@model NutritionWatcher.Models.RegistrationUserModel
 @{
-    ViewBag.Title = "Registration";
+    Layout = "~/Views/Shared/_LayoutBeforeLogin.cshtml";
 }
 
-    <div>
-        @using (Html.BeginForm("Registration", "User", null, FormMethod.Post, new { }))
-        {
-            @Html.LabelFor(x => x.Username)
-            @Html.TextBoxFor(x => x.Username)
 
-            @Html.LabelFor(x => x.Firstname)
-            @Html.TextBoxFor(x => x.Firstname)
+<div>
+    @using (Html.BeginForm("Registration", "User", null, FormMethod.Post, new { }))
+    {
+        @Html.LabelFor(x => x.Username)
+        @Html.TextBoxFor(x => x.Username)
 
-            @Html.LabelFor(x => x.Lastname)
-            @Html.TextBoxFor(x => x.Lastname)
+        @Html.LabelFor(x => x.Firstname)
+        @Html.TextBoxFor(x => x.Firstname)
 
-            @Html.LabelFor(x => x.Password)
-            @Html.PasswordFor(x => x.Password)
+        @Html.LabelFor(x => x.Lastname)
+        @Html.TextBoxFor(x => x.Lastname)
 
-            @Html.LabelFor(x => x.ConfirmPassword)
-            @Html.PasswordFor(x => x.ConfirmPassword)
+        @Html.LabelFor(x => x.Password)
+        @Html.PasswordFor(x => x.Password)
 
-            @Html.LabelFor(x => x.Email)
-            @Html.TextBoxFor(x => x.Email)
+        @Html.LabelFor(x => x.ConfirmPassword)
+        @Html.PasswordFor(x => x.ConfirmPassword)
 
-            <input type="submit" name="send" value="Regisztráció" class=""/>
-        }
-    </div>
+        @Html.LabelFor(x => x.Email)
+        @Html.TextBoxFor(x => x.Email)
 
+        <input type="submit" name="send" value="Regisztráció" class="" />
+    }
+</div>

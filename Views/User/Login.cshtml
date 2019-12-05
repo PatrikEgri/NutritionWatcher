@@ -1,29 +1,19 @@
 ﻿@model NutritionWatcher.Models.UserModel
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_LayoutBeforeLogin.cshtml";
 }
 
-<!doctype html>
-<html>
-    <head>
-        <title>Bejelentkezés</title>
-    </head>
-    <body>
-        <div>
-            @using (Html.BeginForm("LoginDB", "User", null, FormMethod.Post, new { }))
-            {
-                @Html.LabelFor(x => x.Username)
-                @Html.TextBoxFor(x => x.Username)
 
-                @Html.LabelFor(x => x.Password)
-                @Html.PasswordFor(x => x.Password)
+<div>
+    @using (Html.BeginForm("LoginDB", "User", null, FormMethod.Post, new { }))
+    {
+        @Html.LabelFor(x => x.Username)
+        @Html.TextBoxFor(x => x.Username)
 
-                <input name="send" value="Belépés" class="" type="submit" />
-            }
-        </div>
-    </body>
-</html>
+        @Html.LabelFor(x => x.Password)
+        @Html.PasswordFor(x => x.Password)
 
-
-
+        <input name="send" value="Belépés" class="" type="submit" />
+    }
+</div>
 

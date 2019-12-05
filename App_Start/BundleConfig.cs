@@ -25,6 +25,13 @@ namespace NutritionWatcher
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
+
+            // My style- and scriptbundles
+            bundles.Add(new StyleBundle("~/BeforeLogin/styles").Include(
+                      "~/Content/navbar.css"));
+
+            bundles.Add(new ScriptBundle("~/BeforeLogin/scripts").Include(
+                      "~/Content/navbar.js"));
         }
     }
 }
