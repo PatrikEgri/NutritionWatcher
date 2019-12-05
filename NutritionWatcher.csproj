@@ -206,6 +206,7 @@
     <Content Include="Views\Statistics\MealCount.cshtml" />
     <Content Include="Views\Statistics\Summary.cshtml" />
     <Content Include="Views\Statistics\SummaryByDate.cshtml" />
+    <Content Include="Views\Consumption\ShowAssignments.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -25,7 +25,7 @@
                     }
                 }
             </table>
-            <h5>Összesen bevitt fehérje: @Model.AsQueryable().Sum(x => x.GetConsumedProtein())</h5>
+            <h5>Összesen bevitt fehérje: @Model.ToList().FindAll(x => x.Consumption.Date == DateTime.Today.ToString("yyyy-MM-dd")).AsQueryable().Sum(x => x.GetConsumedProtein())</h5>
         }
         else
         {

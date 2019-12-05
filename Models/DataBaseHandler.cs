@@ -585,16 +585,16 @@ namespace NutritionWatcher.Models
                         {
                             Id = reader.GetInt32(0),
                             Name = reader.GetString(1),
-                            Protein = reader.GetFloat(2),
-                            Fat = reader.GetFloat(3),
-                            Hydrocarbonate = reader.GetFloat(4),
+                            Protein = float.Parse("" + reader.GetDouble(2)),
+                            Fat = float.Parse("" + reader.GetDouble(3)),
+                            Hydrocarbonate = float.Parse("" + reader.GetDouble(4)),
                             Gramm = reader.GetInt32(5)
                         },
                         Consumption = new ConsumptionModel
                         {
                             Id = reader.GetInt32(6),
                             Date = reader.GetDateTime(7).ToString("yyyy-MM-dd"),
-                            Time = reader.GetDateTime(8).ToString("HH:mm")
+                            Time = new DateTime(1, 1, 1, reader.GetTimeSpan(8).Hours, reader.GetTimeSpan(8).Minutes, 0).ToString("HH:mm")
                         },
                         Id = reader.GetInt32(9),
                         ConsumedGramms = reader.GetInt32(10)
@@ -714,6 +714,79 @@ namespace NutritionWatcher.Models
             catch (SqlException)
             {
                 return null;
+            }
+        }
+
+        public List<CalorieViewModel> GetCalorieViewModelsByConsumptionId(int userId, int consumptionId)
+        {
+            try
+            {
+                List<CalorieViewModel> calorieViewModels = new List<CalorieViewModel>();
+
+                _connection.Open();
+
+                SqlCommand cmd = new SqlCommand("SELECT Food.id, Food.name, Food.protein, Food.fat, Food.hydrocarbonate, Food.gramm, " +
+                                                "Consumption.id, Consumption.date, Consumption.time, " +
+                                                "Food_Consumption.id, Food_Consumption.gramm " +
+                                                "FROM (Food INNER JOIN Food_Consumption ON Food.id = Food_Consumption.food) " +
+                                                "INNER JOIN Consumption ON Food_Consumption.consumption = Consumption.id " +
+                                                $"WHERE Consumption.owner = {userId} AND Consumption.id = {consumptionId}", _connection);
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    calorieViewModels.Add(new CalorieViewModel
+                    {
+                        Food = new FoodModel
+                        {
+                            Id = reader.GetInt32(0),
+                            Name = reader.GetString(1),
+                            Protein = float.Parse(""+reader.GetDouble(2)),
+                            Fat = float.Parse("" + reader.GetDouble(3)),
+                            Hydrocarbonate = float.Parse("" + reader.GetDouble(4)),
+                            Gramm = reader.GetInt32(5)
+                        },
+                        Consumption = new ConsumptionModel
+                        {
+                            Id = reader.GetInt32(6),
+                            Date = reader.GetDateTime(7).ToString("yyyy-MM-dd"),
+                            Time = new DateTime(1, 1, 1, reader.GetTimeSpan(8).Hours, reader.GetTimeSpan(8).Minutes, 0).ToString("HH:mm")
+                        },
+                        Id = reader.GetInt32(9),
+                        ConsumedGramms = reader.GetInt32(10)
+                    });
+                }
+
+                _connection.Close();
+
+                return calorieViewModels;
+            }
+            catch (SqlException)
+            {
+                return null;
+            }
+        }
+
+        public bool DeleteAssignment(int id)
+        {
+            try
+            {
+                _connection.Open();
+
+                SqlCommand cmd = new SqlCommand($"DELETE FROM Food_Consumption WHERE id = {id};",  _connection);
+                SqlDataAdapter adapter = new SqlDataAdapter
+                {
+                    DeleteCommand = cmd
+                };
+                adapter.DeleteCommand.ExecuteNonQuery();
+
+                _connection.Close();
+
+                return true;
+            }
+            catch (SqlException)
+            {
+                return false;
             }
         }
 

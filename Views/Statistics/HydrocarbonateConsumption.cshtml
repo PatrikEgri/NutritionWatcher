@@ -26,7 +26,7 @@
                     }
                 }
             </table>
-            <h5>Összesen bevitt szénhidrát: @Model.AsQueryable().Sum(x => x.GetConsumedHydrocarbonate())</h5>
+            <h5>Összesen bevitt szénhidrát: @Model.ToList().FindAll(x => x.Consumption.Date == DateTime.Today.ToString("yyyy-MM-dd")).AsQueryable().Sum(x => x.GetConsumedHydrocarbonate())</h5>
         }
         else
         {

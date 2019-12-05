@@ -25,7 +25,7 @@
                     }
                 }
             </table>
-            <h5>Összesen bevitt kalória: @Model.AsQueryable().Sum(x => x.GetConsumedCalorie())</h5>
+            <h5>Összesen bevitt kalória: @Model.ToList().FindAll(x => x.Consumption.Date == DateTime.Today.ToString("yyyy-MM-dd")).AsQueryable().Sum(x => x.GetConsumedCalorie())</h5>
         }
         else
         {

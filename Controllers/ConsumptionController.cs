@@ -165,5 +165,35 @@ namespace NutritionWatcher.Controllers
                 return HttpNotFound();
             }
         }
+
+        public ActionResult ShowAssignments(int id)
+        {
+            List<CalorieViewModel> vm = db.GetCalorieViewModelsByConsumptionId((int)Session["User"], id);
+
+            if (vm != null)
+            {
+                ViewBag.Error = null;
+                return View(vm);
+            }
+            else
+            {
+                ViewBag.Error = "Adatbázis hiba történt!";
+                return RedirectToAction("ShowConsumption", new { id = id});
+            }
+        }
+
+        public RedirectToRouteResult DeleteAssignment(int assignId, int consumptionId)
+        {
+            if (db.DeleteAssignment(assignId))
+            {
+                ViewBag.Error = null;
+                return RedirectToAction("ShowAssignments", new { id = consumptionId });
+            }
+            else
+            {
+                ViewBag.Error = "Adatbázis hiba történt!";
+                return RedirectToAction("ShowAssignments", new { id = consumptionId });
+            }
+        }
     }
 }

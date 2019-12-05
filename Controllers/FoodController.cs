@@ -18,7 +18,7 @@ namespace NutritionWatcher.Controllers
         /// </summary>
         /// <param name="food"></param>
         /// <returns></returns>
-        public ActionResult Insert(FoodModel food) // !! valamiért kap értéket !!
+        public ActionResult Insert(FoodModel food)
         {
             if (food.HasValue()) 
             {
@@ -104,6 +104,12 @@ namespace NutritionWatcher.Controllers
 
         public RedirectToRouteResult DeleteDataBase(int id)
         {
+            if (!db.GetUserById((int)Session["User"]).Permission.Equals("admin"))
+            {
+                ViewBag.Error = "A törléshez nincs megfelelő jogosultságod!";
+                return RedirectToAction("ViewFoods");
+            }
+
             if (db.DeleteFood(id))
             {
                 ViewBag.Error = null;
