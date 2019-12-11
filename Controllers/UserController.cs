@@ -179,16 +179,22 @@ namespace NutritionWatcher.Controllers
         public ActionResult Login()
         {
             ViewBag.Error = null;
-            return View(new UserModel());         
+            return View(new LoginUserModel());         
         }
 
-        public RedirectToRouteResult LoginDB(UserModel user)
+        [HttpPost]
+        public ActionResult LoginDB(LoginUserModel user)
         {
+            if (!ModelState.IsValid /*&& user.Id == 0*/)
+            {
+                return View("Login", user);
+            }
+
             UserModel loggedIn = db.GetUser(user);
             if (loggedIn == null)
             {
                 ViewBag.Error = "Sikertelen bejelentkezés!";
-                return RedirectToAction("Login");
+                return View("Login");
             }
             else
             {
@@ -202,11 +208,11 @@ namespace NutritionWatcher.Controllers
         /// This controller sets the value of the Session to null and redirects to the Login View.
         /// </summary>
         /// <returns></returns>
-        public RedirectToRouteResult Logout()
+        public ViewResult Logout()
         {
             ViewBag.Error = null;
             Session["User"] = null;
-            return RedirectToAction("Login");
+            return View("Login");
         }
 
         /// <summary>
@@ -216,25 +222,30 @@ namespace NutritionWatcher.Controllers
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public ActionResult Registration(RegistrationUserModel user)
+        public ViewResult Registration()
         {
-            if (!user.HasValue())
+            ViewBag.Error = null;
+            return View(new RegistrationUserModel());
+        }
+
+        [HttpPost]
+        public ActionResult RegistrationDB(RegistrationUserModel user)
+        {
+            if (!ModelState.IsValid)
             {
                 ViewBag.Error = null;
-                return View(new RegistrationUserModel());                
+                return View("Registration", user);
+            }
+
+            if (db.InsertUser(user))
+            {
+                ViewBag.Error = null;
+                return RedirectToAction("Login");
             }
             else
             {
-                if (db.InsertUser(user))
-                {
-                    ViewBag.Error = null;
-                    return RedirectToAction("Login");
-                }
-                else
-                {
-                    ViewBag.Error = "Adatbázis hiba történt!";
-                    return RedirectToAction("Registration");
-                }
+                ViewBag.Error = "Adatbázis hiba történt!";
+                return View("Registration");
             }
         }
     }

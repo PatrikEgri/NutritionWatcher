@@ -1,30 +1,52 @@
 ﻿@model NutritionWatcher.Models.RegistrationUserModel
 @{
+    ViewBag.Title = "Regisztráció";
     Layout = "~/Views/Shared/_LayoutBeforeLogin.cshtml";
 }
 
 
-<div>
-    @using (Html.BeginForm("Registration", "User", null, FormMethod.Post, new { }))
-    {
+
+@using (Html.BeginForm("RegistrationDB", "User", null, FormMethod.Post, new { @class = "box" }))
+{
+    <h2>Regisztráció</h2>
+    <div class="group">
         @Html.LabelFor(x => x.Username)
-        @Html.TextBoxFor(x => x.Username)
+        @Html.TextBoxFor(x => x.Username, new { @class = "input" })
+        @Html.ValidationMessageFor(x => x.Username)
+    </div>
 
+    <div class="group">
         @Html.LabelFor(x => x.Firstname)
-        @Html.TextBoxFor(x => x.Firstname)
+        @Html.TextBoxFor(x => x.Firstname, new { @class = "input" })
+        @Html.ValidationMessageFor(x => x.Firstname)
+    </div>
 
+    <div class="group">
         @Html.LabelFor(x => x.Lastname)
-        @Html.TextBoxFor(x => x.Lastname)
+        @Html.TextBoxFor(x => x.Lastname, new { @class = "input" })
+        @Html.ValidationMessageFor(x => x.Lastname)
+    </div>
 
+    <div class="group">
         @Html.LabelFor(x => x.Password)
-        @Html.PasswordFor(x => x.Password)
+        @Html.PasswordFor(x => x.Password, new { @class = "input" })
+        @Html.ValidationMessageFor(x => x.Password)
+    </div>
 
+    <div class="group">
         @Html.LabelFor(x => x.ConfirmPassword)
-        @Html.PasswordFor(x => x.ConfirmPassword)
+        @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "input" })
+        @Html.ValidationMessageFor(x => x.ConfirmPassword)
+    </div>
 
+    <div class="group">
         @Html.LabelFor(x => x.Email)
-        @Html.TextBoxFor(x => x.Email)
+        @Html.TextBoxFor(x => x.Email, new { @class = "input" })
+        @Html.ValidationMessageFor(x => x.Email)
+    </div>
 
-        <input type="submit" name="send" value="Regisztráció" class="" />
-    }
-</div>
+    <input type="submit" name="send" value="Regisztráció" class="btn success" />
+    <br />
+    <label class="field-validation-error">@ViewBag.Error</label>
+}
+

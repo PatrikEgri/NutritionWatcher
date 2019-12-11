@@ -6,20 +6,16 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     @Styles.Render("~/BeforeLogin/styles")
+    @Scripts.Render("~/bundles/jqueryval")
 </head>
 <body>
-    @{
-        Html.RenderPartial("_NavbarBeforeLogin");
-    }
+    @Html.Partial("_NavbarBeforeLogin")
+    
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
     </div>
 
-    @Scripts.Render("~/BeforeLogin/scripts")
+    @Scripts.Render("~/BeforeLogin/scripts")   
     @RenderSection("scripts", required: false)
 </body>
 </html>

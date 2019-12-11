@@ -1,19 +1,33 @@
-﻿@model NutritionWatcher.Models.UserModel
+﻿@model NutritionWatcher.Models.LoginUserModel
 @{
+    ViewBag.Title = "Bejelentkezés";
     Layout = "~/Views/Shared/_LayoutBeforeLogin.cshtml";
 }
 
 
-<div>
-    @using (Html.BeginForm("LoginDB", "User", null, FormMethod.Post, new { }))
-    {
+
+@using (Html.BeginForm("LoginDB", "User", null, FormMethod.Post, new { @class = "box" }))
+{
+    <h2>Bejelentkezés</h2>
+    <div class="group">
         @Html.LabelFor(x => x.Username)
-        @Html.TextBoxFor(x => x.Username)
+        @Html.TextBoxFor(x => x.Username, new { @class = "input" })
+        @Html.ValidationMessageFor(x => x.Username)
+    </div>
 
+    <div class="group">
         @Html.LabelFor(x => x.Password)
-        @Html.PasswordFor(x => x.Password)
+        @Html.PasswordFor(x => x.Password, new { @class = "input" })
+        @Html.ValidationMessageFor(x => x.Password)
+    </div>
 
-        <input name="send" value="Belépés" class="" type="submit" />
-    }
-</div>
+    <input name="send" value="Belépés" class="btn success" type="submit" />
+    <br />
+    <label class="field-validation-error">@ViewBag.Error</label>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}
 

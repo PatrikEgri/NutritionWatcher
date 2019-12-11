@@ -40,7 +40,7 @@ nav {
         right: 5%;
         top: 50%;
         transform: translate(-5%, -50%);
-        z-index: 2;
+        z-index: 200;
     }
 
     .nav-links {
@@ -53,6 +53,7 @@ nav {
         -webkit-clip-path: circle(0px at 100% 10vh);
         transition: all 1s ease-out;
         pointer-events: none;
+        z-index: 1;
     }
 
         .nav-links.open {

@@ -28,7 +28,9 @@ namespace NutritionWatcher
 
             // My style- and scriptbundles
             bundles.Add(new StyleBundle("~/BeforeLogin/styles").Include(
-                      "~/Content/navbar.css"));
+                      "~/Content/navbar.css",
+                      "~/Content/before-login-box.css",
+                      "~/Content/input-style.css"));
 
             bundles.Add(new ScriptBundle("~/BeforeLogin/scripts").Include(
                       "~/Content/navbar.js"));

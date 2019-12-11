@@ -424,7 +424,7 @@ namespace NutritionWatcher.Models
             }
         }
 
-        public UserModel GetUser(UserModel user)
+        public UserModel GetUser(LoginUserModel user)
         {
             try
             {
@@ -457,6 +457,7 @@ namespace NutritionWatcher.Models
                 return null;
             }
         }
+
         public bool InsertConsumption(ConsumptionModel consumption, int userId)
         {
             try
