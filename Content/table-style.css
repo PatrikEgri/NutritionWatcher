@@ -1,0 +1,46 @@
+﻿/* ! Kész */
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    background: white;
+}
+
+.table td, .table th {
+    border-bottom: 1px solid black;
+    height: 50px;
+    text-align: left;
+    padding: 5px
+}
+
+.table-striped tr:nth-child(even) {
+    background-color: #eeeeff;
+}
+
+.table-hover tr:hover {
+    background-color: #8888aacc;
+}
+
+.table-dark {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-dark td, .table-dark th {
+    border-bottom: 1px solid lightblue;
+    height: 50px;
+    text-align: left;
+    color: white;
+}
+
+.table-dark tr {
+    background-color: #444;
+}
+
+.table-dark.table-striped tr:nth-child(even) {
+    background-color: #333;
+}
+
+.table-dark.table-hover tr:hover {
+    background-color: #222;
+}

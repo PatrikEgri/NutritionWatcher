@@ -175,34 +175,46 @@
     width: 100%;
 }
 
+.btn.warning {
+    border: 1px solid rgb(179, 122, 0);
+    background-color: orange;
+    color: white;
+}
+
+.btn.warning:hover {
+    border: 1px solid #cc5000;
+    background-color: #ff8000;
+    color: white;
+}
+
 .btn.light {
-border: 1px solid #eee;
-background-color: white;
-color: #5959ee;
+    border: 1px solid #eee;
+    background-color: white;
+    color: #5959ee;
 }
 
 .btn.light:hover {
-    border: 2px solid #bbb;
+    border: 1px solid #bbb;
     background-color: #eee;
     color: #4949ee;
 }
 
 .btn.dark {
-border: 1px solid #444;
-background-color: #333;
-color: orangered;
+    border: 1px solid #444;
+    background-color: #333;
+    color: orangered;
 }
 
 .btn.dark:hover {
-    border: 2px solid #111;
+    border: 1px solid #111;
     background-color: #222;
     color: orangered;
 }
 
 .btn.success {
-border: 1px solid darkgreen;
-background-color: green;
-color: white;
+    border: 1px solid darkgreen;
+    background-color: green;
+    color: white;
 }
 
 .btn.success:hover {
@@ -212,9 +224,9 @@ color: white;
 }
 
 .btn.primary {
-border: 1px solid darkblue;
-background-color: rgb(25, 25, 197);
-color: white;
+    border: 1px solid darkblue;
+    background-color: rgb(25, 25, 197);
+    color: white;
 }
 
 .btn.primary:hover {
@@ -223,26 +235,14 @@ color: white;
     color: white;
 }
 
-.btn.warning {
-border: 1px solid rgb(179, 122, 0);
-background-color: orange;
-color: orangered;
-}
-
-.btn.warning:hover {
-    border: 2px solid #cc5000;
-    background-color: #ff8000;
-    color: orangered;
-}
-
 .btn.danger {
-border: 1px solid darkred;
-background-color: red;
-color: white;
+    border: 1px solid darkred;
+    background-color: red;
+    color: white;
 }
 
 .btn.danger:hover {
-    border: 2px solid rgb(120, 0, 0);
+    border: 1px solid rgb(120, 0, 0);
     background-color: rgb(200, 0, 0);
     color: white;
 }

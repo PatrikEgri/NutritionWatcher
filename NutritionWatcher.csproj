@@ -149,9 +149,11 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\content.css" />
     <Content Include="Content\input-style.css" />
     <Content Include="Content\navbar.css" />
     <Content Include="Content\navbar.js" />
+    <Content Include="Content\table-style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -214,6 +216,7 @@
     <Content Include="Views\Consumption\ShowAssignments.cshtml" />
     <Content Include="Views\Shared\_LayoutBeforeLogin.cshtml" />
     <Content Include="Views\Shared\_NavbarBeforeLogin.cshtml" />
+    <Content Include="Views\Shared\_Navbar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

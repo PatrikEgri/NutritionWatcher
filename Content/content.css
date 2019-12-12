@@ -1,0 +1,22 @@
+﻿body {
+    background: #f1f1ff;
+}
+
+.container {
+    margin: 10px 10% 0px 10%;
+}
+
+.flex {
+    display: flex;
+    align-content: space-evenly;
+    margin: 10px 0px;
+    width: 100%;
+}
+
+.link-btn {
+    text-align: center;
+    text-decoration: none;
+    margin: 5px;
+    display: block;
+    width: 100%;
+}

@@ -3,42 +3,37 @@
     ViewBag.Title = "ViewUserData";
 }
 
-<div>
+<div class="container">
     @ViewBag.Error
-    <table>
+    <table class="table table-striped table-hover">
         <tr>
+            <td>@Html.LabelFor(x => x.Username)</td>
             <td>@Model.Username</td>
-            <td>@Html.ActionLink("Felhasználónév módosítása", "UpdateUsername")</td>
+            <td>@Html.ActionLink("Felhasználónév módosítása", "UpdateUsername", "User", new { @class = "btn primary link-btn" })</td>
         </tr>
         <tr>
+            <td>@Html.LabelFor(x => x.Firstname)</td>
             <td>@Model.Firstname</td>
-            <td>@Html.ActionLink("Név módosítása", "UpdateName")</td>
+            <td>@Html.ActionLink("Vezetéknév módosítása", "UpdateFirstname", "User", new { @class = "btn primary link-btn" })</td>
         </tr>
         <tr>
+            <td>@Html.LabelFor(x => x.Lastname)</td>
             <td>@Model.Lastname</td>
-            <td>@Html.ActionLink("Név módosítása", "UpdateName")</td>
+            <td>@Html.ActionLink("Keresztnév módosítása", "UpdateLastname", "User", new { @class = "btn primary link-btn" })</td>
         </tr>
         <tr>
+            <td>@Html.LabelFor(x => x.Email)</td>
             <td>@Model.Email</td>
-            <td>@Html.ActionLink("E-Mail módosítása", "UpdateEmail")</td>
+            <td>@Html.ActionLink("E-Mail módosítása", "UpdateEmail", "User", new { @class = "btn primary link-btn" })</td>
         </tr>
         <tr>
+            <td>@Html.LabelFor(x => x.Style.Name)</td>
             <td>@Model.Style.Name</td>
-            <td>@Html.ActionLink("Stílus módosítása", "UpdateStyle")</td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                @using (Html.BeginForm("UpdatePassword", "User", null, FormMethod.Post, new { }))
-                {
-                    <input name="send" class="" value="Jelszó módosítása" type="submit" />
-                }
-            </td>
+            <td>@Html.ActionLink("Stílus módosítása", "UpdateStyle", "User", new { @class="btn primary link-btn" })</td>
         </tr>
     </table>
-    <div>
-        @using (Html.BeginForm("DeleteUser", "User", null, FormMethod.Post, new { }))
-        {
-            <input name="send" class="" value="Fiók megszűntetése" type="submit"/>
-        }
+    <div class="flex">
+        @Html.ActionLink("Jelszó módosítása", "UpdatePassword", "User", new { @class = "btn warning link-btn" })
+        @Html.ActionLink("Fiók megszűntetése", "DeleteUser", "User", new { @class = "btn danger link-btn" })        
     </div>
 </div>
