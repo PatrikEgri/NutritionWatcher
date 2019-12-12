@@ -13,10 +13,40 @@
     width: 100%;
 }
 
+.flex .link-btn {
+    margin: 5px;
+}
+
+.container-center {
+    width: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.container-center input, .container-center select {
+    margin: 5px 0px 5px 0px;
+    width: 100%;
+}
+
+
 .link-btn {
     text-align: center;
     text-decoration: none;
-    margin: 5px;
     display: block;
+    width: 100%;
+}
+
+.field-validation-error {
+    color: red;
+}
+
+.input-validation-error {
+    border: 1px solid red;
+}
+
+.group {
+    margin: 10px;
     width: 100%;
 }

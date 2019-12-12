@@ -138,8 +138,11 @@
     <Compile Include="Models\RegistrationUserModel.cs" />
     <Compile Include="Models\StyleModel.cs" />
     <Compile Include="Models\SummaryViewModel.cs" />
+    <Compile Include="Models\UpdateEmailViewModel.cs" />
+    <Compile Include="Models\UpdateNameViewModel.cs" />
     <Compile Include="Models\UpdatePasswordViewModel.cs" />
     <Compile Include="Models\UpdateStyleViewModel.cs" />
+    <Compile Include="Models\UpdateUsernameViewModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

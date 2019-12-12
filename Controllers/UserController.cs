@@ -11,32 +11,22 @@ namespace NutritionWatcher.Controllers
     {
         DataBaseHandler db = new DataBaseHandler();
 
-        /// <summary>
-        /// This controller returns the View, where we can see the data of the User.
-        /// </summary>
-        /// <returns></returns>
         public ViewResult ViewUserData()
         {
             return View(db.GetUserById((int)Session["User"]));
         }
 
-        /// <summary>
-        /// This controller waits for a UserModer as parameter. If it doesn't take the parameter,
-        /// then it returns a View, where we can see the actual data of the User. If it takes the
-        /// parameter, then it updates the user in the database and redirects to the View, where
-        /// we can see the data of the User.
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
-        public ActionResult UpdateUsername()
-        {
-                ViewBag.Error = null;
-                return View(db.GetUserById((int)Session["User"]));
+        public ViewResult UpdateUsername()
+        {            
+            ViewBag.Error = null;
+            return View(new UpdateUsernameViewModel() { Username = db.GetUserById((int)Session["User"]).Username });
         }
 
-        public RedirectToRouteResult UpdateUsernameDB(UserModel user)
+        public ActionResult UpdateUsernameDB(UpdateUsernameViewModel user)
         {
-            if (db.UpdateUsername(user.Id, user.Username))
+            if (!ModelState.IsValid) return View("UpdateUsername", user);
+
+            if (db.UpdateUsername((int)Session["User"], user.Username))
             {
                 ViewBag.Error = null;
                 return RedirectToAction("ViewUserData");
@@ -44,19 +34,22 @@ namespace NutritionWatcher.Controllers
             else
             {
                 ViewBag.Error = "Adatbázis hiba történt!";
-                return RedirectToAction("ViewUserData");
+                return View("ViewUserData");
             }
         }
 
         public ActionResult UpdateName()
         {
             ViewBag.Error = null;
-            return View(db.GetUserById((int)Session["User"]));
+            UserModel user = db.GetUserById((int)Session["User"]);
+            return View(new UpdateNameViewModel() { Firstname = user.Firstname, Lastname = user.Lastname});
         }
 
-        public RedirectToRouteResult UpdateNameDB(UserModel user)
+        public ActionResult UpdateNameDB(UpdateNameViewModel user)
         {
-            if (db.UpdateName(user.Id, user.Firstname, user.Lastname))
+            if (!ModelState.IsValid) return View("UpdateName", user);
+
+            if (db.UpdateName((int)Session["User"], user.Firstname, user.Lastname))
             {
                 ViewBag.Error = null;
                 return RedirectToAction("ViewUserData");
@@ -64,19 +57,21 @@ namespace NutritionWatcher.Controllers
             else
             {
                 ViewBag.Error = "Adatbázis hiba történt!";
-                return RedirectToAction("ViewUserData");
+                return View("ViewUserData");
             }
         }
 
-        public ActionResult UpdateEmail()
+        public ViewResult UpdateEmail()
         {
             ViewBag.Error = null;
-            return View(db.GetUserById((int)Session["User"]));
+            return View(new UpdateEmailViewModel() { Email = db.GetUserById((int)Session["User"]).Email });
         }
 
-        public RedirectToRouteResult UpdateEmailDB(UserModel user)
+        public ActionResult UpdateEmailDB(UpdateEmailViewModel user)
         {
-            if (db.UpdateEmail(user.Id, user.Email))
+            if (!ModelState.IsValid) return View("UpdateEmail", user);
+
+            if (db.UpdateEmail((int)Session["User"], user.Email))
             {
                 ViewBag.Error = null;
                 return RedirectToAction("ViewUserData");
@@ -84,7 +79,7 @@ namespace NutritionWatcher.Controllers
             else
             {
                 ViewBag.Error = "Adatbázis hiba történt!";
-                return RedirectToAction("ViewUserData");
+                return View("ViewUserData");
             }
         }
 
@@ -93,14 +88,19 @@ namespace NutritionWatcher.Controllers
             ViewBag.Error = null;
             return View(new UpdateStyleViewModel 
             {
-                UserId = (int)Session["User"],
                 Styles = db.GetStyles()
             });
         }
 
-        public RedirectToRouteResult UpdateStyleDB(UpdateStyleViewModel vm)
+        public ActionResult UpdateStyleDB(UpdateStyleViewModel vm)
         {
-            if (db.UpdateStyle(vm.UserId, vm.StyleId))
+            if (!ModelState.IsValid) 
+            {
+                vm.Styles = db.GetStyles();
+                return View("UpdateStyle", vm); 
+            }
+
+            if (db.UpdateStyle((int)Session["User"], vm.StyleId))
             {
                 ViewBag.Error = null;
                 return RedirectToAction("ViewUserData");
@@ -108,23 +108,23 @@ namespace NutritionWatcher.Controllers
             else
             {
                 ViewBag.Error = "Adatbázis hiba történt!";
-                return RedirectToAction("ViewUserData");
+                return View("ViewUserData");
             }
         }
 
         public ActionResult UpdatePassword()
         {
             ViewBag.Error = null;
-            return View(new UpdatePasswordViewModel
-            {
-                UserId = (int)Session["User"]
-            });
+            return View(new UpdatePasswordViewModel());
         }
 
-        public RedirectToRouteResult UpdatePasswordDB(UpdatePasswordViewModel vm)
+        public ActionResult UpdatePasswordDB(UpdatePasswordViewModel vm)
         {
-            if (db.Hash(vm.Password) == db.GetUserById((int)Session["User"]).Password) {
-                if (db.UpdatePassword(vm.UserId, vm.NewPassword))
+            if (!ModelState.IsValid) return View("UpdatePassword", vm);
+
+            if (db.Hash(vm.Password) == db.GetUserById((int)Session["User"]).Password) 
+            {
+                if (db.UpdatePassword((int)Session["User"], vm.NewPassword))
                 {
                     ViewBag.Error = null;
                     return RedirectToAction("ViewUserData");
@@ -132,23 +132,17 @@ namespace NutritionWatcher.Controllers
                 else
                 {
                     ViewBag.Error = "Adatbázis hiba történt!";
-                    return RedirectToAction("ViewUserData");
+                    return View("ViewUserData");
                 }
             }
             else
             {
-                return RedirectToAction("UpdatePassword");
+                ViewBag.Error = "Nem jól adta meg jelenlegi jelszavát!";
+                return View("UpdatePassword");
             }
         }
 
 
-        /// <summary>
-        /// This controller waits for a UserModel as parameter. If it doesn't take the parameter,
-        /// then it returns a View that goes for sure we want to delete the user. If it takes the
-        /// parameter, then it deletes the user from the database and redirects to the Login View.
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
         public ActionResult DeleteUser()
         {
             ViewBag.Error = null;
@@ -168,14 +162,6 @@ namespace NutritionWatcher.Controllers
             }
         }
 
-        /// <summary>
-        /// This controller waits for a UserModel as parameter. If it doesn't take the parameter,
-        /// then it returns a View, where we can enter our username and password. If it takes the
-        /// parameter, then it creates a Session with the UserModel and redirects to the View, 
-        /// where we can see the data of the User.
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
         public ActionResult Login()
         {
             ViewBag.Error = null;
@@ -215,13 +201,6 @@ namespace NutritionWatcher.Controllers
             return View("Login");
         }
 
-        /// <summary>
-        /// This controller waits for a UserModel as parameter. If it doesn't take the parameter,
-        /// then it returns a View, where we can registrate. If it takes the parameter, then it
-        /// inserts the user into the database and redirects to the Login View.
-        /// </summary>
-        /// <param name="user"></param>
-        /// <returns></returns>
         public ViewResult Registration()
         {
             ViewBag.Error = null;

@@ -3,12 +3,18 @@
     ViewBag.Title = "DeleteUser";
 }
 
-<div>
-    @using (Html.BeginForm("DeleteUserDB", "User", new { userId = Model.Id }, FormMethod.Post, new { }))
+<div style="text-align: center;">
+    <h1>Arra készül, hogy megszűnteti a felhasználói fiókját! Biztosan folytatja?</h1>
+    @using (Html.BeginForm("DeleteUserDB", "User", new { userId = Model.Id }, FormMethod.Post, new { @class = "container-center" }))
     {
-        <h1>Arra készül, hogy megszűnteti a felhasználói fiókját! Biztosan folytatja?</h1>
-        @Html.ActionLink("Mégse", "ViewUserData")
-        <input name="send" class="" type="submit" value="Fiók megszűntetése"/>
+        <div class="group">
+            @Html.ActionLink("Mégse", "ViewUserData", "User", new { @class = "link-btn btn success" })
+        </div>
+            
+        <div class="group">
+            <input name="send" class="btn danger" type="submit" value="Fiók megszűntetése" />
+        </div>
+            
     }
 </div>
 

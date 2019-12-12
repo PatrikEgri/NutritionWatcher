@@ -1,16 +1,18 @@
-﻿@model NutritionWatcher.Models.UserModel
+﻿@model NutritionWatcher.Models.UpdateUsernameViewModel
 @{
     ViewBag.Title = "UpdateUsername";
 }
 
 <div>
-    @using (Html.BeginForm("UpdateUsernameDB", "User", null, FormMethod.Post, new { }))
+    @using (Html.BeginForm("UpdateUsernameDB", "User", null, FormMethod.Post, new { @class = "container-center" }))
     {
-        @Html.LabelFor(x => x.Username)
-        @Html.TextBoxFor(x => x.Username)
+        <div>
+            @Html.LabelFor(x => x.Username)
+            @Html.TextBoxFor(x => x.Username, new { @class = "input" })
+            @Html.ValidationMessageFor(x => x.Username)
+        </div>
 
-        @Html.HiddenFor(x => x.Id)
-        <input name="send" class="" type="submit" value="Módosítás"/>
+        <input name="send" class="btn success" type="submit" value="Módosítás"/>
     }
 </div>
 

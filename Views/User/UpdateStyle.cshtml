@@ -4,14 +4,17 @@
 }
 
 <div>
-    @using (Html.BeginForm("UpdateStyleDB", "User", null, FormMethod.Post, new { }))
+    @using (Html.BeginForm("UpdateStyleDB", "User", null, FormMethod.Post, new { @class = "container-center" }))
     {
-        @Html.LabelFor(x => x.Styles)
-        @Html.DropDownListFor(x => x.StyleId,
-            new SelectList(Model.Styles, "Id", "Name"), "Válasszon egy elemet!", null)
-
-        @Html.HiddenFor(x => x.UserId)
-        <input name="send" value="Módosítás" class="" type="submit"/>
+        <div class="group">
+            @Html.LabelFor(x => x.Styles)
+            @Html.DropDownListFor(x => x.StyleId,
+                new SelectList(Model.Styles, "Id", "Name"), "Válasszon egy elemet!", new { @class = "input"})
+            @Html.ValidationMessageFor(x => x.StyleId)
+        </div>
+        <div class="group">
+            <input name="send" value="Módosítás" class="btn success" type="submit" />
+        </div>
     }
 </div>
 
