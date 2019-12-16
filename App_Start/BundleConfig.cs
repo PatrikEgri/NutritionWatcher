@@ -39,7 +39,8 @@ namespace NutritionWatcher
                       "~/Content/navbar.css",
                       "~/Content/input-style.css",
                       "~/Content/table-style.css",
-                      "~/Content/content.css"));
+                      "~/Content/content.css",
+                      "~/Content/dropdown.css"));
         }
     }
 }

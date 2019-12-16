@@ -3,25 +3,42 @@
     ViewBag.Title = "Új étel létrehozása";
 }
 
-<div>
-    @using (Html.BeginForm("Insert", "Food", new { }, FormMethod.Post, new { }))
-    {
-        @Html.LabelFor(x => x.Name)
-        @Html.TextBoxFor(x => x.Name)
+    <div class="container-center">
+        @using (Html.BeginForm("InsertDataBase", "Food", new { }, FormMethod.Post, new { }))
+        {
+            <div class="group">
+                @Html.LabelFor(x => x.Name)
+                @Html.TextBoxFor(x => x.Name, new { @class = "input"})
+                @Html.ValidationMessageFor(x => x.Name)
+            </div>
 
-        @Html.LabelFor(x => x.Protein)
-        @Html.TextBoxFor(x => x.Protein)
+            <div class="group">
+                @Html.LabelFor(x => x.Protein)
+                @Html.TextBoxFor(x => x.Protein, new { @class = "input"})
+                @Html.ValidationMessageFor(x => x.Protein)
+            </div>
 
-        @Html.LabelFor(x => x.Fat)
-        @Html.TextBoxFor(x => x.Fat)
+            <div class="group">
+                @Html.LabelFor(x => x.Fat)
+                @Html.TextBoxFor(x => x.Fat, new { @class = "input"})
+                @Html.ValidationMessageFor(x => x.Fat)
+            </div>
 
-        @Html.LabelFor(x => x.Hydrocarbonate)
-        @Html.TextBoxFor(x => x.Hydrocarbonate)
+            <div class="group">
+                @Html.LabelFor(x => x.Hydrocarbonate)
+                @Html.TextBoxFor(x => x.Hydrocarbonate, new { @class = "input"})
+                @Html.ValidationMessageFor(x => x.Hydrocarbonate)
+            </div>
 
-        @Html.LabelFor(x => x.Gramm)
-        @Html.TextBoxFor(x => x.Gramm)
+            <div class="group">
+                @Html.LabelFor(x => x.Gramm)
+                @Html.TextBoxFor(x => x.Gramm, new { @class = "input"})
+                @Html.ValidationMessageFor(x => x.Gramm)
+            </div>
 
-        <input type="submit" name="send" class="" value="Létrehozás" />
-    }
-</div>
+            <div class="group">
+                <input type="submit" name="send" class="btn success" value="Létrehozás" />
+            </div>
+        }
+    </div>
 

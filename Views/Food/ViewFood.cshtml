@@ -3,22 +3,36 @@
     ViewBag.Title = Model.Name + " megtekintése";
 }
 
-<div>
-    <ul>
-        <li>@Model.Name</li>
-        <li>@Model.Protein</li>
-        <li>@Model.Fat</li>
-        <li>@Model.Hydrocarbonate</li>
-        <li>@Model.Gramm</li>
-    </ul>
+<div class="container" style="text-align: center;">
+    <table class="table table-striped table-hover" style="width: 350px; position: relative; left: 50%; transform: translateX(-50%);">
+        <tr>
+            <td colspan="2" style="text-align: center;">@Model.Name</td>
+        </tr>
+        <tr>
+            <td>Fehérjetartalom</td>
+            <td>@Model.Protein g</td>
+        </tr>
+        <tr>
+            <td>Zsírtartalom</td>
+            <td>@Model.Fat g</td>
+        </tr>
+        <tr>
+            <td>Szénhidráttartalom</td>
+            <td>@Model.Hydrocarbonate g</td>
+        </tr>
+        <tr>
+            <td>Tömeg</td>
+            <td>@Model.Gramm g</td>
+        </tr>
+    </table>
     <div>
-        @using (Html.BeginForm("Update", "Food", new { id = Model.Id }, FormMethod.Post, new { @class="" }))
+        @using (Html.BeginForm("Update", "Food", new { id = Model.Id }, FormMethod.Post, new { @style="width: 350px; position: relative; left: 50%; transform: translateX(-50%); margin: 10px 0px;" }))
         {
-            <input type="submit" name="send" class="" value="Módosítás"/>
+            <input type="submit" name="send" class="btn warning" value="Módosítás"/>
         }
-        @using (Html.BeginForm("Delete", "Food", new { Model.Id }, FormMethod.Post, new { @class="" }))
+        @using (Html.BeginForm("Delete", "Food", new { Model.Id }, FormMethod.Post, new { @style="width: 350px; position: relative; left: 50%; transform: translateX(-50%);" }))
         {
-            <input type="submit" name="send" class="" value="Törlés"/>
+            <input type="submit" name="send" class="btn danger" value="Törlés"/>
         }
     </div>
 </div>

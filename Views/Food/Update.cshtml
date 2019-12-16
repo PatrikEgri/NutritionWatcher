@@ -4,26 +4,39 @@
     ViewBag.Title = Model.Name + " módosítása";
 }
 
-<div>
+<div class="container-center">
     @using (Html.BeginForm("UpdateDataBase", "Food", null, FormMethod.Post, new { }))
     {
-        @Html.LabelFor(x => x.Name)
-        @Html.TextBoxFor(x => x.Name)
-
-        @Html.LabelFor(x => x.Protein)
-        @Html.TextBoxFor(x => x.Protein)
-
-        @Html.LabelFor(x => x.Fat)
-        @Html.TextBoxFor(x => x.Fat)
-
-        @Html.LabelFor(x => x.Hydrocarbonate)
-        @Html.TextBoxFor(x => x.Hydrocarbonate)
-
-        @Html.LabelFor(x => x.Gramm)
-        @Html.TextBoxFor(x => x.Gramm)
+        <div class="group">
+            @Html.LabelFor(x => x.Name)
+            @Html.TextBoxFor(x => x.Name, new { @class = "input" })
+            @Html.ValidationMessageFor(x => x.Name)
+        </div>
+        <div class="group">
+            @Html.LabelFor(x => x.Protein)
+            @Html.TextBoxFor(x => x.Protein, new { @class = "input" })
+            @Html.ValidationMessageFor(x => x.Protein)
+        </div>
+        <div class="group">
+            @Html.LabelFor(x => x.Fat)
+            @Html.TextBoxFor(x => x.Fat, new { @class = "input" })
+            @Html.ValidationMessageFor(x => x.Fat)
+        </div>
+        <div class="group">
+            @Html.LabelFor(x => x.Hydrocarbonate)
+            @Html.TextBoxFor(x => x.Hydrocarbonate, new { @class = "input" })
+            @Html.ValidationMessageFor(x => x.Hydrocarbonate)
+        </div>
+        <div class="group">
+            @Html.LabelFor(x => x.Gramm)
+            @Html.TextBoxFor(x => x.Gramm, new { @class = "input" })
+            @Html.ValidationMessageFor(x => x.Gramm)
+        </div>
 
         @Html.HiddenFor(x => x.Id)
-        <input type="submit" name="send" class="" value="Módosítás"/>
+        <div class="group">
+            <input type="submit" name="send" class="btn success" value="Módosítás" />
+        </div>
     }
 </div>
 

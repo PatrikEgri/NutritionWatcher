@@ -9,15 +9,15 @@ namespace NutritionWatcher.Models
     public class FoodModel
     {        
         public int Id { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Kötelező megadni a nevet!")]
         public string Name { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Kötelező megadni a fehérjetartalmat!")]
         public float Protein { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Kötelező megadni a zsírtartalmat!")]
         public float Fat { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Kötelező megadni a szénhidráttartalmat!")]
         public float Hydrocarbonate { get; set; }
-        [Required]
+        [Required(ErrorMessage = "Kötelező megadni a tömeget!")]
         public int Gramm { get; set; }
 
         public bool HasValue()

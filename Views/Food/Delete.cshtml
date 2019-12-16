@@ -3,15 +3,15 @@
     ViewBag.Title = Model.Name + " törlése";
 }
 
-<div>
+<div class="container-center">
     @using (Html.BeginForm("DeleteDataBase", "Food", new { id = Model.Id}, FormMethod.Post, new { }))
     {
-        <h1>Biztosan törölni szeretnéd a(z) @Model.Name nevű ételt?</h1>
-        <div>
-            <input type="submit" name="send" class="" value="Törlés"/>
+        <h1 style="text-align: center;">Biztosan törölni szeretnéd a(z) @Model.Name nevű ételt?</h1>
+        <div class="group">
+            <input type="submit" name="send" class="btn danger" value="Törlés"/>
         </div>
-        <div>
-            <a href="@Url.Action("ViewFood", "Food", new { id = Model.Id })">Mégse</a>
+        <div class="group">
+            <a href="@Url.Action("ViewFood", "Food", new { id = Model.Id })" class="link-btn btn primary">Mégse</a>
         </div>
     }
 </div>

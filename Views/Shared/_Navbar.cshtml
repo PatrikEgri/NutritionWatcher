@@ -6,6 +6,17 @@
     </div>
     <ul class="nav-links">
         <li>@Html.ActionLink("Felhasználói adatok", "ViewUserData", "User")</li>
-        
+        @* Nav Dropdown *@
+        <li>
+            <div class="dropdown-vertical" >
+                <label style="cursor:pointer;">Ételek</label>
+                <div class="dropdown-content">
+                    <p class="group"> @Html.ActionLink("Ételek megtekintése", "ViewFoods", "Food")</p>
+                    <p class="group"> @Html.ActionLink("Új étel hozzáadása", "Insert", "Food")</p>
+                </div>
+            </div>
+        </li>
+
+        <li>@Html.ActionLink("Kijelentkezés", "Logout", "User")</li>
     </ul>
 </nav>
