@@ -3,18 +3,26 @@
     ViewBag.Title = "Update";
 }
 
-    <div>
-        @using (Html.BeginForm("UpdateDataBase", "Consumption", null, FormMethod.Post, new { }))
-        {
+<div class="container-center">
+    @using (Html.BeginForm("UpdateDataBase", "Consumption", null, FormMethod.Post, new { }))
+    {
+        <div class="group">
             @Html.LabelFor(x => x.Date)
-            @Html.TextBoxFor(x => x.Date, "{0:yyyy-MM-dd}")
+            @Html.TextBoxFor(x => x.Date, "{0:yyyy-MM-dd}", new { @class = "input"})
+            @Html.ValidationMessageFor(x => x.Date)
+        </div>
 
+        <div class="group">
             @Html.LabelFor(x => x.Time)
-            @Html.TextBoxFor(x => x.Time, "{0:HH:mm}")
+            @Html.TextBoxFor(x => x.Time, "{0:HH:mm}", new { @class = "input"})
+            @Html.ValidationMessageFor(x => x.Time)
+        </div>
 
-            @Html.HiddenFor(x => x.Id)
-            @Html.HiddenFor(x => x.UserId)
+        @Html.HiddenFor(x => x.Id)
+        @Html.HiddenFor(x => x.UserId)
 
-            <input name="send" type="submit" class="" value="Módosítás"/>
-        }
-    </div>
+        <div class="group">
+            <input name="send" type="submit" class="btn success" value="Módosítás" />
+        </div>
+    }
+</div>

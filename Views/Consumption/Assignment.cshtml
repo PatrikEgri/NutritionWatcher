@@ -3,24 +3,34 @@
     ViewBag.Title = "Assignment";
 }
 
-<div>
+<div class="container-center">
     @using (Html.BeginForm("AssignmentDataBase", "Consumption", null, FormMethod.Post, new { }))
     {
-        @Html.LabelFor(x => x.Foods)
-        @Html.DropDownListFor(x => x.FoodId,
-            new SelectList(Model.Foods, "Id", "Name"),
-            "Válassz a listából!", new { })
-        
+        <div class="group">
+            @Html.LabelFor(x => x.Foods)
+            @Html.DropDownListFor(x => x.FoodId,
+                new SelectList(Model.Foods, "Id", "Name"),
+                "Válassz a listából!", new { @class = "input"})
+            @Html.ValidationMessageFor(x => x.FoodId)
+        </div>
 
-        @Html.LabelFor(x => x.Consumptions)
-        @Html.DropDownListFor(x => x.ConsumptionId,
-            new SelectList(Model.Consumptions, "Id", "Date"),
-            "Válassz a listából!", new { })
+        <div class="group">
+            @Html.LabelFor(x => x.Consumptions)
+            @Html.DropDownListFor(x => x.ConsumptionId,
+                new SelectList(Model.Consumptions, "Id", "Date"),
+                "Válassz a listából!", new { @class = "input" })
+            @Html.ValidationMessageFor(x => x.ConsumptionId)
+        </div>
 
-        @Html.LabelFor(x => x.Gramm)
-        @Html.TextBoxFor(x => x.Gramm)
+        <div class="group">
+            @Html.LabelFor(x => x.Gramm)
+            @Html.TextBoxFor(x => x.Gramm, new { @class = "input" })
+            @Html.ValidationMessageFor(x => x.Gramm)
+        </div>
 
-        <input class="" name="send" type="submit" value="Hozzárendelés"/>
+        <div class="group">
+            <input class="btn success" name="send" type="submit" value="Hozzárendelés" />
+        </div>
     }
 </div>
 

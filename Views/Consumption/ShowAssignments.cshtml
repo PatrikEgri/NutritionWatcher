@@ -4,7 +4,7 @@
 }
 
 <div>
-    <table>
+    <table class="table table-striped table-hover">
         <tr>
             <th>Étel neve</th>
             <th>Fehérje mennyiség</th>
@@ -24,7 +24,7 @@
                 <td>
                     @using (Html.BeginForm("DeleteAssignment", "Consumption", new { assignId = x.Id, consumptionId = x.Consumption.Id }, FormMethod.Post, new { }))
                     {
-                        <input name="send" class="" value="Törlés" type="submit"/>
+                        <input name="send" class="btn primary" value="Törlés" type="submit"/>
                     }
                 </td>
             </tr>

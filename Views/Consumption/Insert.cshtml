@@ -3,16 +3,23 @@
     ViewBag.Title = "Insert";
 }
 
-<div>
+<div class="container-center">
     @using (Html.BeginForm("InsertDataBase", "Consumption", null, FormMethod.Post, new { }))
     {
-        @Html.LabelFor(x => x.Date)
-        @Html.TextBoxFor(x => x.Date, "{0:yyyy-MM-dd}")
+        <div class="group">
+            @Html.LabelFor(x => x.Date)
+            @Html.TextBoxFor(x => x.Date, "{0:yyyy-MM-dd}", new { @class = "input"})
+            @Html.ValidationMessageFor(x => x.Date)
+        </div>
+        <div class="group">
+            @Html.LabelFor(x => x.Time)
+            @Html.TextBoxFor(x => x.Time, "{0:HH:mm}", new { @class = "input"})
+            @Html.ValidationMessageFor(x => x.Time)
+        </div>
 
-        @Html.LabelFor(x => x.Time)
-        @Html.TextBoxFor(x => x.Time, "{0:HH:mm}")
-
-        <input name="send" class="" value="Létrehozás" type="submit"/>
+        <div class="group">
+            <input name="send" class="btn success" value="Létrehozás" type="submit" />
+        </div>
     }
 </div>
 

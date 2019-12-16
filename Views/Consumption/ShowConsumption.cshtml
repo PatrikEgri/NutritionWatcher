@@ -4,22 +4,36 @@
 }
 
 <div>
-    <ul>
-        <li>@Model.Date</li>
-        <li>@Model.Time</li>
-    </ul>
-    <div>
+    <div class="group">
+        <table class="table table-hover table-striped" style="position: relative; left: 50%; transform: translateX(-50%); width: 350px;">
+            <tr>
+                <td>Dátum</td>
+                <td>@Model.Date</td>
+            </tr>
+            <tr>
+                <td>Idő</td>
+                <td>@Model.Time</td>
+            </tr>
+        </table>
+    </div>
+    <div style="position: relative; left: 50%; transform: translateX(-50%); width: 350px;">
         @using (Html.BeginForm("Update", "Consumption", new { id = Model.Id }, FormMethod.Post, new { @class = "" }))
         {
-            <input type="submit" name="send" class="" value="Módosítás" />
+            <div class="group">
+                <input type="submit" name="send" class="btn warning" value="Módosítás" />
+            </div>
         }
         @using (Html.BeginForm("Delete", "Consumption", new { id = Model.Id }, FormMethod.Post, new { @class = "" }))
         {
-            <input type="submit" name="send" class="" value="Törlés" />
+            <div class="group">
+                <input type="submit" name="send" class="btn danger" value="Törlés" />
+            </div>
         }
         @using (Html.BeginForm("ShowAssignments", "Consumption", new { id = Model.Id }, FormMethod.Post, new { @class = "" }))
         {
-            <input type="submit" name="send" class="" value="Hozzárendelt ételek megtekintése" />
+            <div class="group">
+                <input type="submit" name="send" class="btn primary " value="Hozzárendelt ételek megtekintése" />
+            </div>
         }
     </div>
 </div>
