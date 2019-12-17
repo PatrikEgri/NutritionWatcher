@@ -12,7 +12,7 @@
         @foreach (NutritionWatcher.Models.ConsumptionModel consumption in Model)
         {
             <tr>
-                <td>@Html.ActionLink(consumption.Date, "ShowConsumption", new { id = consumption.Id})</td>
+                <td>@Html.ActionLink(consumption.Date, "ShowConsumption", new { id = consumption.Id}, new { @class = "link-btn", @style = "text-align: left;"})</td>
                 <td>@consumption.Time</td>
             </tr>
         }

@@ -4,13 +4,13 @@
     ViewBag.Title = "HydrocarbonateConsumption";
 }
 
-<div>
+<div class="container">
     @* -- Napi -- *@
-    <div>
+    <div class="group table-group">
         <h4>A mai napon bevitt szénhidrát</h4>
         @if (Model.Any(x => x.Consumption.Date == DateTime.Today.ToString("yyyy-MM-dd")))
         {
-            <table>
+            <table class="table table-striped table-hover">
                 <tr>
                     <th>Idő</th>
                     <th>Bevitt szénhidrát</th>
@@ -34,11 +34,11 @@
         }
     </div>
     @* -- Heti -- *@
-    <div>
+    <div class="group table-group">
         <h4>Az elmúlt héten bevitt szénhidrát</h4>
         @if (Model.Any(x => x.IsThisWeek()))
         {
-            <table>
+            <table class="table table-striped table-hover">
                 <tr>
                     <th>Nap</th>
                     <th>Bevitt szénhidrát</th>
@@ -60,11 +60,11 @@
         }
     </div>
     @* -- Havi -- *@
-    <div>
+    <div class="group table-group">
         <h4>Az elmúlt hónapban bevitt szénhidrát</h4>
         @if (Model.Any(x => x.IsThisMonth()))
         {
-            <table>
+            <table class="table table-striped table-hover">
                 <tr>
                     <th>Nap</th>
                     <th>Bevitt szénhidrát</th>

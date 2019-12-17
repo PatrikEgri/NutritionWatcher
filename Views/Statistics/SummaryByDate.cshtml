@@ -3,9 +3,9 @@
     ViewBag.Title = "SummaryByDate";
 }
 
-<div>
+<div style="width: 350px; position: relative; left: 50%; transform: translateX(-50%); margin-top: 30px;">
     <h4>@Model.ConsumptionModels[0].Date napi összegzése</h4>
-    <table>
+    <table class="table table-striped table-hover">
         <tr>
             <td>Kalóriafogyasztás</td>
             <td>@Model.CalorieViewModels.AsQueryable().Sum(x => x.GetConsumedCalorie())</td>

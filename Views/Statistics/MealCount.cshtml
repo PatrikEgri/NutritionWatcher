@@ -3,13 +3,13 @@
     ViewBag.Title = "MealCount";
 }
 
-<div>
+<div class="container">
     @* -- Napi -- *@
-    <div>
+    <div class="group table-group">
         <h4>A mai napon rögzített étkezések száma</h4>
         @if (Model.Any(x => x.Date.Equals(DateTime.Today.ToString("yyyy-MM-dd"))))
         {
-            <table>
+            <table class="table table-striped table-hover">
                 <tr>
                     <th>Nap</th>
                     <th>Idő</th>
@@ -30,11 +30,11 @@
         }
     </div>
     @* -- Heti -- *@
-    <div>
+    <div class="group table-group">
         <h4>Az elmúlt héten rögzített étkezések száma</h4>
         @if (Model.Any(x => x.IsThisWeek()))
         {
-            <table>
+            <table class="table table-striped table-hover">
                 <tr>
                     <th>Nap</th>
                     <th>Étkezések száma</th>
@@ -56,11 +56,11 @@
         }
     </div>
     @* -- Havi -- *@
-    <div>
+    <div class="group table-group">
         <h4>Az elmúlt hónap rögzített étkezések száma</h4>
         @if (Model.Any(x => x.IsThisMonth()))
         {
-            <table>
+            <table class="table table-striped table-hover">
                 <tr>
                     <th>Nap</th>
                     <th>Étkezések száma</th>

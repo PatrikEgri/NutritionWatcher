@@ -3,13 +3,13 @@
     ViewBag.Title = "FatConsumption";
 }
 
-<div>
+<div class="container">
     @* -- Napi -- *@
-    <div>
+    <div class="group table-group">
         <h4>A mai napon bevitt zsír</h4>
         @if (Model.Any(x => x.Consumption.Date == DateTime.Today.ToString("yyyy-MM-dd")))
         {
-            <table>
+            <table class="table table-hover table-striped">
                 <tr>
                     <th>Idő</th>
                     <th>Bevitt zsír</th>
@@ -33,11 +33,11 @@
         }
     </div>
     @* -- Heti -- *@
-    <div>
+    <div class="group table-group">
         <h4>Az elmúlt héten bevitt zsír</h4>
         @if (Model.Any(x => x.IsThisWeek()))
         {
-            <table>
+            <table class="table table-hover table-striped">
                 <tr>
                     <th>Nap</th>
                     <th>Bevitt zsír</th>
@@ -59,11 +59,11 @@
         }
     </div>
     @* -- Havi -- *@
-    <div>
+    <div class="group table-group">
         <h4>Az elmúlt hónapban bevitt zsír</h4>
         @if (Model.Any(x => x.IsThisMonth()))
         {
-            <table>
+            <table class="table table-hover table-striped">
                 <tr>
                     <th>Nap</th>
                     <th>Bevitt zsír</th>

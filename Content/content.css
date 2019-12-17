@@ -50,3 +50,22 @@
     margin: 10px;
     width: 100%;
 }
+
+.group.border-bottom {
+    border-bottom: 1px solid black;
+}
+
+.group.table-group {
+    margin-top: 40px;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        margin: 0px;
+        margin-top: 10px;
+    }
+
+    .group {
+        margin: 10px 0px;
+    }
+}

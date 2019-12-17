@@ -11,8 +11,8 @@
             <div class="dropdown-vertical">
                 <label style="cursor:pointer;">Ételek</label>
                 <div class="dropdown-content">
-                    <p class="group"> @Html.ActionLink("Ételek megtekintése", "ViewFoods", "Food")</p>
-                    <p class="group"> @Html.ActionLink("Új étel hozzáadása", "Insert", "Food")</p>
+                    <p class="group border-bottom"> @Html.ActionLink("Ételek megtekintése", "ViewFoods", "Food")</p>
+                    <p class="group border-bottom"> @Html.ActionLink("Új étel hozzáadása", "Insert", "Food")</p>
                 </div>
             </div>
         </li>
@@ -21,9 +21,23 @@
             <div class="dropdown-vertical">
                 <label style="cursor:pointer;">Fogyasztások</label>
                 <div class="dropdown-content">
-                    <p class="group"> @Html.ActionLink("Fogyasztások megtekintése", "ShowConsumptions", "Consumption")</p>
-                    <p class="group"> @Html.ActionLink("Új fogyasztás hozzáadása", "Insert", "Consumption")</p>
-                    <p class="group"> @Html.ActionLink("Étel fogyasztáshoz rendelése", "Assignment", "Consumption")</p>
+                    <p class="group border-bottom"> @Html.ActionLink("Fogyasztások megtekintése", "ShowConsumptions", "Consumption")</p>
+                    <p class="group border-bottom"> @Html.ActionLink("Új fogyasztás hozzáadása", "Insert", "Consumption")</p>
+                    <p class="group border-bottom"> @Html.ActionLink("Étel fogyasztáshoz rendelése", "Assignment", "Consumption")</p>
+                </div>
+            </div>
+        </li>
+
+        <li>
+            <div class="dropdown-vertical">
+                <label style="cursor: pointer;">Statisztikák</label>
+                <div class="dropdown-content">
+                    <p class="group border-bottom"> @Html.ActionLink("Kalóriafogyasztás", "CalorieConsumption", "Statistics")</p>
+                    <p class="group border-bottom"> @Html.ActionLink("Fehérjefogyasztás", "ProteinConsumption", "Statistics")</p>
+                    <p class="group border-bottom"> @Html.ActionLink("Zsírfogyasztás", "FatConsumption", "Statistics")</p>
+                    <p class="group border-bottom"> @Html.ActionLink("Szénhidrátfogyasztás", "HydrocarbonateConsumption", "Statistics")</p>
+                    <p class="group border-bottom"> @Html.ActionLink("Étkezések száma", "MealCount", "Statistics")</p>
+                    <p class="group border-bottom"> @Html.ActionLink("Összegzés", "Summary", "Statistics")</p>
                 </div>
             </div>
         </li>

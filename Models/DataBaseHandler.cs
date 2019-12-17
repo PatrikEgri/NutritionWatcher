@@ -692,16 +692,16 @@ namespace NutritionWatcher.Models
                         {
                             Id = reader.GetInt32(0),
                             Name = reader.GetString(1),
-                            Protein = reader.GetFloat(2),
-                            Fat = reader.GetFloat(3),
-                            Hydrocarbonate = reader.GetFloat(4),
+                            Protein = float.Parse(reader.GetDouble(2).ToString()),
+                            Fat = float.Parse(reader.GetDouble(3).ToString()),
+                            Hydrocarbonate = float.Parse(reader.GetDouble(4).ToString()),
                             Gramm = reader.GetInt32(5)
                         },
                         Consumption = new ConsumptionModel
                         {
                             Id = reader.GetInt32(6),
                             Date = reader.GetDateTime(7).ToString("yyyy-MM-dd"),
-                            Time = reader.GetDateTime(8).ToString("HH:mm")
+                            Time = new DateTime(1, 1, 1, reader.GetTimeSpan(8).Hours, reader.GetTimeSpan(8).Minutes, 0).ToString("HH:mm")
                         },
                         Id = reader.GetInt32(9),
                         ConsumedGramms = reader.GetInt32(10)
