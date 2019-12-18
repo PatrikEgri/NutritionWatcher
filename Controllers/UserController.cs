@@ -186,6 +186,7 @@ namespace NutritionWatcher.Controllers
             {
                 ViewBag.Error = null;
                 Session["User"] = loggedIn.Id;
+                Session["Style"] = loggedIn.Style;
                 return RedirectToAction("ViewUserData");
             }
         }
@@ -198,6 +199,7 @@ namespace NutritionWatcher.Controllers
         {
             ViewBag.Error = null;
             Session["User"] = null;
+            Session["Style"] = null;
             return View("Login");
         }
 

@@ -1,26 +1,28 @@
-﻿@{ 
-    if (Session["User"] == null)
-    {
-        Response.Redirect("~/User/Login");
-    }
+﻿ 
+@if (Session["User"] == null)
+{
+    Response.Redirect("~/User/Login");
 }
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title</title>
-    @Styles.Render("~/AfterLogin/styles")
-</head>
-<body>
-    @Html.Partial("_Navbar")
-    <div class="container body-content">
-        @RenderBody()
-    </div>
+else
+{
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title</title>
+        @Styles.Render((new NutritionWatcher.Models.DataBaseHandler()).GetUserById((int)Session["User"]).Style.Name.Equals("világos") ? "~/AfterLogin/styles" : "~/AfterLogin/darkstyles")
+    </head>
+    <body>
+        @Html.Partial("_Navbar")
+        <div class="container body-content">
+            @RenderBody()
+        </div>
 
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/BeforeLogin/scripts")
-    @RenderSection("scripts", required: false)
-</body>
-</html>
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/BeforeLogin/scripts")
+        @RenderSection("scripts", required: false)
+    </body>
+    </html>
+}

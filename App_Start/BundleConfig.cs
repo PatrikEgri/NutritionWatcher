@@ -41,6 +41,13 @@ namespace NutritionWatcher
                       "~/Content/table-style.css",
                       "~/Content/content.css",
                       "~/Content/dropdown.css"));
+
+            bundles.Add(new StyleBundle("~/AfterLogin/darkstyles").Include(
+                      "~/Content/DarkStyle/navbar.css",
+                      "~/Content/DarkStyle/input-style.css",
+                      "~/Content/DarkStyle/table-style.css",
+                      "~/Content/DarkStyle/content.css",
+                      "~/Content/DarkStyle/dropdown.css"));
         }
     }
 }
