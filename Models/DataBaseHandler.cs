@@ -106,7 +106,7 @@ namespace NutritionWatcher.Models
                         Id = reader.GetInt32(0),
                         Date = reader.GetDateTime(1).ToString("yyyy-MM-dd"),
                         Time = new DateTime(1, 1, 1, reader.GetTimeSpan(2).Hours, reader.GetTimeSpan(2).Minutes, 0).ToString("HH:mm"),
-                        UserId = reader.GetInt32(3)
+                        User = GetUserById(reader.GetInt32(3)) 
                     };
                 }
 
@@ -489,7 +489,7 @@ namespace NutritionWatcher.Models
                 _connection.Open();
 
                 SqlCommand cmd = new SqlCommand($"UPDATE Consumption SET date = '{consumption.Date}', time = '{consumption.Time}', " +
-                    $"owner = {consumption.UserId} WHERE id = {consumption.Id};", _connection);
+                    $"owner = {consumption.User.Id} WHERE id = {consumption.Id};", _connection);
                 SqlDataAdapter adapter = new SqlDataAdapter
                 {
                     UpdateCommand = cmd
@@ -548,7 +548,7 @@ namespace NutritionWatcher.Models
                         Id = reader.GetInt32(0),
                         Date = reader.GetDateTime(1).ToString("yyyy-MM-dd"),
                         Time = new DateTime(1, 1, 1, reader.GetTimeSpan(2).Hours, reader.GetTimeSpan(2).Minutes, 0).ToString("HH:mm"),
-                        UserId = reader.GetInt32(3)
+                        User = GetUserById(reader.GetInt32(3))
                     });
                 }
 
@@ -654,7 +654,7 @@ namespace NutritionWatcher.Models
                         Id = reader.GetInt32(0),
                         Date = reader.GetDateTime(1).ToString("yyyy-MM-dd"),
                         Time = new DateTime(1, 1, 1, reader.GetTimeSpan(2).Hours, reader.GetTimeSpan(2).Minutes, 0).ToString("HH:mm"),
-                        UserId = reader.GetInt32(3)
+                        User = GetUserById(reader.GetInt32(3))
                     });
                 }
 

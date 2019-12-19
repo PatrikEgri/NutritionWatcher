@@ -10,6 +10,7 @@ namespace NutritionWatcher.Models
     {        
         public int Id { get; set; }
         [Required(ErrorMessage = "Kötelező megadni a nevet!")]
+        [StringLength(100)]
         public string Name { get; set; }
         [Required(ErrorMessage = "Kötelező megadni a fehérjetartalmat!")]
         public float Protein { get; set; }
@@ -19,10 +20,5 @@ namespace NutritionWatcher.Models
         public float Hydrocarbonate { get; set; }
         [Required(ErrorMessage = "Kötelező megadni a tömeget!")]
         public int Gramm { get; set; }
-
-        public bool HasValue()
-        {
-            return (Name != "" && Name != null) && (Gramm != 0);
-        }
     }
 }

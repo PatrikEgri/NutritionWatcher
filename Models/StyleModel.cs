@@ -10,6 +10,7 @@ namespace NutritionWatcher.Models
     {
         public int Id { get; set; }
         [Display(Name = "Stílus")]
+        [StringLength(10)]
         public string Name { get; set; }
     }
 }
