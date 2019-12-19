@@ -179,6 +179,10 @@
     <Compile Include="Migrations\201912181752214_InitModels.designer.cs">
       <DependentUpon>201912181752214_InitModels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201912190905167_SeedDefaultData.cs" />
+    <Compile Include="Migrations\201912190905167_SeedDefaultData.designer.cs">
+      <DependentUpon>201912190905167_SeedDefaultData.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CalorieViewModel.cs" />
@@ -203,6 +207,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\SqlValues.txt" />
     <Content Include="Content\before-login-box.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -321,7 +326,7 @@
     <None Include="_bin_deployableAssemblies\x86\Microsoft.VC90.CRT\Microsoft.VC90.CRT.manifest" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="bin\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -339,6 +344,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201912181752214_InitModels.resx">
       <DependentUpon>201912181752214_InitModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201912190905167_SeedDefaultData.resx">
+      <DependentUpon>201912190905167_SeedDefaultData.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
