@@ -3,7 +3,7 @@
     ViewBag.Title = "Update";
 }
 
-<div class="container-center">
+<div class="container-center"> @Html.ValidationSummary()
     @using (Html.BeginForm("UpdateDataBase", "Consumption", null, FormMethod.Post, new { }))
     {
         <div class="group">
@@ -19,7 +19,7 @@
         </div>
 
         @Html.HiddenFor(x => x.Id)
-        @Html.HiddenFor(x => x.UserId)
+        @Html.HiddenFor(x => x.User.Id)
 
         <div class="group">
             <input name="send" type="submit" class="btn success" value="Módosítás" />

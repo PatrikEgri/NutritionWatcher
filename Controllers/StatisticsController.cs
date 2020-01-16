@@ -4,16 +4,19 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using NutritionWatcher.Models;
+using System.Data.Entity;
 
 namespace NutritionWatcher.Controllers
 {
     public class StatisticsController : Controller
     {
-        DataBaseHandler db = new DataBaseHandler();
+        ApplicationDbContext _context = new ApplicationDbContext();
+
         // GET: Statistics
         public ActionResult CalorieConsumption()
         {
-            var viewModel = db.GetCalorieViewModels(db.GetUserById((int)Session["User"]));
+            int id = (int)Session["User"];
+            var viewModel = _context.CalorieViewModels.Include(x => x.Food).Include(x => x.Consumption).Include(x => x.Consumption.User).ToList().FindAll(x => x.Consumption.User.Id.Equals(id));
             if (viewModel != null)
             {
                 ViewBag.Error = null;
@@ -28,7 +31,8 @@ namespace NutritionWatcher.Controllers
 
         public ActionResult ProteinConsumption()
         {
-            var viewModel = db.GetCalorieViewModels(db.GetUserById((int)Session["User"]));
+            int id = (int)Session["User"];
+            var viewModel = _context.CalorieViewModels.Include(x => x.Food).Include(x => x.Consumption).Include(x => x.Consumption.User).ToList().FindAll(x => x.Consumption.User.Id.Equals(id));
             if (viewModel != null)
             {
                 ViewBag.Error = null;
@@ -43,7 +47,8 @@ namespace NutritionWatcher.Controllers
 
         public ActionResult FatConsumption()
         {
-            var viewModel = db.GetCalorieViewModels(db.GetUserById((int)Session["User"]));
+            int id = (int)Session["User"];
+            var viewModel = _context.CalorieViewModels.Include(x => x.Food).Include(x => x.Consumption).Include(x => x.Consumption.User).ToList().FindAll(x => x.Consumption.User.Id.Equals(id));
             if (viewModel != null)
             {
                 ViewBag.Error = null;
@@ -58,7 +63,8 @@ namespace NutritionWatcher.Controllers
 
         public ActionResult HydrocarbonateConsumption()
         {
-            var viewModel = db.GetCalorieViewModels(db.GetUserById((int)Session["User"]));
+            int id = (int)Session["User"];
+            var viewModel = _context.CalorieViewModels.Include(x => x.Food).Include(x => x.Consumption).Include(x => x.Consumption.User).ToList().FindAll(x => x.Consumption.User.Id.Equals(id));
             if (viewModel != null)
             {
                 ViewBag.Error = null;
@@ -73,7 +79,8 @@ namespace NutritionWatcher.Controllers
 
         public ActionResult MealCount()
         {
-            var viewModel = db.GetConsumptions((int)Session["User"]);
+            int id = (int)Session["User"];
+            var viewModel = _context.Consumptions.Include(x => x.User).ToList().FindAll(x => x.User.Id.Equals(id));
             if (viewModel != null)
             {
                 ViewBag.Error = null;
@@ -88,10 +95,11 @@ namespace NutritionWatcher.Controllers
 
         public ActionResult Summary()
         {
+            int id = (int)Session["User"];
             SummaryViewModel viewModel = new SummaryViewModel
             {
-                CalorieViewModels = db.GetCalorieViewModels(db.GetUserById((int)Session["User"])),
-                ConsumptionModels = db.GetConsumptions((int)Session["User"])
+                CalorieViewModels = _context.CalorieViewModels.Include(x => x.Food).Include(x => x.Consumption).Include(x => x.Consumption.User).ToList().FindAll(x => x.Consumption.User.Id.Equals(id)),
+                ConsumptionModels = _context.Consumptions.Include(x => x.User).ToList().FindAll(x => x.User.Id.Equals(id))
             }; 
         
             if (viewModel.CalorieViewModels != null && viewModel.ConsumptionModels != null)
@@ -108,10 +116,11 @@ namespace NutritionWatcher.Controllers
 
         public ActionResult SummaryByDate(string date)
         {
+            int id = (int)Session["User"];
             SummaryViewModel vm = new SummaryViewModel
             {
-                CalorieViewModels = db.GetCalorieViewModelsByDate((int)Session["User"], date),
-                ConsumptionModels = db.GetConsumptionsByDate((int)Session["User"], date)
+                CalorieViewModels = _context.CalorieViewModels.Include(x => x.Food).Include(x => x.Consumption).Include(x => x.Consumption.User).ToList().FindAll(x => x.Consumption.User.Id.Equals(id)),
+                ConsumptionModels = _context.Consumptions.Include(x => x.User).ToList().FindAll(x => x.User.Id.Equals(id))
             };
 
             if (vm.CalorieViewModels != null && vm.ConsumptionModels != null)

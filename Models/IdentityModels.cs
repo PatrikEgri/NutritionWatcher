@@ -38,5 +38,10 @@ namespace NutritionWatcher.Models
         {
             return new ApplicationDbContext();
         }
+
+        static public string Hash(string a)
+        {
+            return a.GetHashCode() > 0 ? (a.GetHashCode() << 5).GetHashCode().ToString() : (a.GetHashCode() >> 5).GetHashCode().ToString();
+        }
     }
 }

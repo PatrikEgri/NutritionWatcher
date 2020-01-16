@@ -4,12 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using NutritionWatcher.Models;
+using System.Data.Entity;
 
 namespace NutritionWatcher.Controllers
 {
     public class FoodController : Controller
     {
-        DataBaseHandler db = new DataBaseHandler();
+        ApplicationDbContext _context = new ApplicationDbContext();
 
         /// <summary>
         /// This controller waits for a FoodModel as parameter. If it doesn't take the parameter, 
@@ -28,15 +29,20 @@ namespace NutritionWatcher.Controllers
         {
             if (!ModelState.IsValid) return View("Insert", food);
 
-            if (db.InsertFood(food))
-            {
-                return RedirectToAction("ViewFoods");
-            }
-            else
-            {
-                ViewBag.Error = "Adatbázis hiba történt!";
-                return RedirectToAction("Insert");
-            }
+            _context.Foods.Add(food);
+            _context.SaveChanges();
+
+            return RedirectToAction("ViewFoods");
+
+            //if (db.InsertFood(food))
+            //{
+            //    return RedirectToAction("ViewFoods");
+            //}
+            //else
+            //{
+            //    ViewBag.Error = "Adatbázis hiba történt!";
+            //    return RedirectToAction("Insert");
+            //}
         }
 
         /// <summary>
@@ -49,8 +55,9 @@ namespace NutritionWatcher.Controllers
         /// <param name="food"></param>
         /// <returns></returns>
         public ViewResult Update(int id)
-        {            
-            FoodModel food = db.GetFoodById(id);
+        {
+            //FoodModel food = db.GetFoodById(id);
+            FoodModel food = _context.Foods.SingleOrDefault(x => x.Id.Equals(id));
 
             if (food == null)
             {
@@ -68,16 +75,26 @@ namespace NutritionWatcher.Controllers
         {
             if (!ModelState.IsValid) return View("Update", food);
 
-            if (db.UpdateFood(food))
-            {
-                ViewBag.Error = null;
-                return RedirectToAction("ViewFoods");
-            }
-            else
-            {
-                ViewBag.Error = "Adatbázis hiba történt!";
-                return View("ViewFoods");
-            }
+            FoodModel foodInDb = _context.Foods.SingleOrDefault(x => x.Id.Equals(food.Id));
+            foodInDb.Name = food.Name;
+            foodInDb.Protein = food.Protein;
+            foodInDb.Fat = food.Fat;
+            foodInDb.Hydrocarbonate = food.Hydrocarbonate;
+            foodInDb.Gramm = food.Gramm;
+            _context.SaveChanges();
+
+            return RedirectToAction("ViewFoods");
+
+            //if (db.UpdateFood(food))
+            //{
+            //    ViewBag.Error = null;
+            //    return RedirectToAction("ViewFoods");
+            //}
+            //else
+            //{
+            //    ViewBag.Error = "Adatbázis hiba történt!";
+            //    return View("ViewFoods");
+            //}
         }
 
         /// <summary>
@@ -90,7 +107,7 @@ namespace NutritionWatcher.Controllers
         /// <returns></returns>
         public ViewResult Delete(int id)
         {
-            FoodModel food = db.GetFoodById(id);
+            FoodModel food = _context.Foods.SingleOrDefault(x => x.Id.Equals(id));
 
             if (food == null)
             {
@@ -106,22 +123,28 @@ namespace NutritionWatcher.Controllers
 
         public ActionResult DeleteDataBase(int id)
         {
-            if (!db.GetUserById((int)Session["User"]).Permission.Equals("admin"))
+            int userid = (int)Session["User"];
+            if (!_context.NWUsers.Include(x => x.Permission).SingleOrDefault(x => x.Id.Equals(userid)).Permission.Name.Equals("admin"))
             {
                 ViewBag.Error = "A törléshez nincs megfelelő jogosultságod!";
                 return View("ViewFoods");
             }
 
-            if (db.DeleteFood(id))
-            {
-                ViewBag.Error = null;
-                return RedirectToAction("ViewFoods");
-            }
-            else
-            {
-                ViewBag.Error = "Adatbázis hiba történt!";
-                return View("ViewFoods");
-            }
+            _context.Foods.Remove(_context.Foods.SingleOrDefault(x => x.Id.Equals(id)));
+            _context.SaveChanges();
+
+            return RedirectToAction("ViewFoods");
+
+            //if (db.DeleteFood(id))
+            //{
+            //    ViewBag.Error = null;
+            //    return RedirectToAction("ViewFoods");
+            //}
+            //else
+            //{
+            //    ViewBag.Error = "Adatbázis hiba történt!";
+            //    return View("ViewFoods");
+            //}
         }
 
         /// <summary>
@@ -130,12 +153,14 @@ namespace NutritionWatcher.Controllers
         /// <returns></returns>
         public ViewResult ViewFoods()
         {
-            return View(db.GetFoods());
+            var foods = from x in _context.Foods orderby x.Name select x;
+            
+            return View(foods.ToList());
         }
 
         public ActionResult ViewFood(int id)
         {
-            FoodModel food = db.GetFoodById(id);
+            FoodModel food = _context.Foods.SingleOrDefault(x => x.Id.Equals(id));
             if (food != null)
             {
                 return View(food);

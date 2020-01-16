@@ -18,5 +18,15 @@ namespace NutritionWatcher.Models
         [StringLength(10)]
         public string Time { get; set; }
         public UserModel User { get; set; }
+
+        public bool IsThisWeek()
+        {
+            return DateTime.Parse(Date) <= DateTime.Today && DateTime.Parse(Date) >= DateTime.Today.AddDays(-6);
+        }
+
+        public bool IsThisMonth()
+        {
+            return DateTime.Parse(Date) <= DateTime.Today && DateTime.Parse(Date) >= DateTime.Today.AddDays(-30);
+        }
     }
 }

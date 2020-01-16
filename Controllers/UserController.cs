@@ -4,44 +4,56 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using NutritionWatcher.Models;
+using System.Data.Entity;
 
 namespace NutritionWatcher.Controllers
 {
     public class UserController : Controller
     {
-        DataBaseHandler db = new DataBaseHandler();
+        ApplicationDbContext _context = new ApplicationDbContext();
 
         public ViewResult ViewUserData()
         {
-            return View(db.GetUserById((int)Session["User"]));
+            int userid = (int)Session["User"];
+            var user = _context.NWUsers.Include(x => x.Style).SingleOrDefault(x => x.Id.Equals(userid));
+            return View(user);
         }
 
         public ViewResult UpdateUsername()
         {            
             ViewBag.Error = null;
-            return View(new UpdateUsernameViewModel() { Username = db.GetUserById((int)Session["User"]).Username });
+            int id = (int)Session["User"];
+            var user = _context.NWUsers.SingleOrDefault(x => x.Id == id);
+            return View(new UpdateUsernameViewModel() { Username = user.Username });
         }
 
         public ActionResult UpdateUsernameDB(UpdateUsernameViewModel user)
         {
             if (!ModelState.IsValid) return View("UpdateUsername", user);
 
-            if (db.UpdateUsername((int)Session["User"], user.Username))
-            {
-                ViewBag.Error = null;
-                return RedirectToAction("ViewUserData");
-            }
-            else
-            {
-                ViewBag.Error = "Adatbázis hiba történt!";
-                return View("ViewUserData");
-            }
+            int id = (int)Session["User"];
+            _context.NWUsers.SingleOrDefault(x => x.Id.Equals(id)).Username = user.Username;
+            _context.SaveChanges();
+
+            return RedirectToAction("ViewUserData");
+
+            //if (db.UpdateUsername((int)Session["User"], user.Username))
+            //{
+            //    ViewBag.Error = null;
+            //    return RedirectToAction("ViewUserData");
+            //}
+            //else
+            //{
+            //    ViewBag.Error = "Adatbázis hiba történt!";
+            //    return View("ViewUserData");
+            //}
         }
 
-        public ActionResult UpdateName()
+        public ViewResult UpdateName()
         {
             ViewBag.Error = null;
-            UserModel user = db.GetUserById((int)Session["User"]);
+            int id = (int)Session["User"];
+            UserModel user = _context.NWUsers.SingleOrDefault(x => x.Id.Equals(id));
             return View(new UpdateNameViewModel() { Firstname = user.Firstname, Lastname = user.Lastname});
         }
 
@@ -49,46 +61,61 @@ namespace NutritionWatcher.Controllers
         {
             if (!ModelState.IsValid) return View("UpdateName", user);
 
-            if (db.UpdateName((int)Session["User"], user.Firstname, user.Lastname))
-            {
-                ViewBag.Error = null;
-                return RedirectToAction("ViewUserData");
-            }
-            else
-            {
-                ViewBag.Error = "Adatbázis hiba történt!";
-                return View("ViewUserData");
-            }
+            int id = (int)Session["User"];
+            UserModel userInDb = _context.NWUsers.SingleOrDefault(x => x.Id.Equals(id));
+            userInDb.Firstname = user.Firstname;
+            userInDb.Lastname = user.Lastname;
+            _context.SaveChanges();
+
+            return RedirectToAction("ViewUserData");
+
+            //if (db.UpdateName((int)Session["User"], user.Firstname, user.Lastname))
+            //{
+            //    ViewBag.Error = null;
+            //    return RedirectToAction("ViewUserData");
+            //}
+            //else
+            //{
+            //    ViewBag.Error = "Adatbázis hiba történt!";
+            //    return View("ViewUserData");
+            //}
         }
 
         public ViewResult UpdateEmail()
         {
             ViewBag.Error = null;
-            return View(new UpdateEmailViewModel() { Email = db.GetUserById((int)Session["User"]).Email });
+            int id = (int)Session["User"];
+            return View(new UpdateEmailViewModel() { Email = _context.NWUsers.SingleOrDefault(x => x.Id.Equals(id)).Email });
         }
 
         public ActionResult UpdateEmailDB(UpdateEmailViewModel user)
         {
             if (!ModelState.IsValid) return View("UpdateEmail", user);
 
-            if (db.UpdateEmail((int)Session["User"], user.Email))
-            {
-                ViewBag.Error = null;
-                return RedirectToAction("ViewUserData");
-            }
-            else
-            {
-                ViewBag.Error = "Adatbázis hiba történt!";
-                return View("ViewUserData");
-            }
+            int id = (int)Session["User"];
+            _context.NWUsers.SingleOrDefault(x => x.Id.Equals(id)).Email = user.Email;
+            _context.SaveChanges();
+
+            return RedirectToAction("ViewUserData");
+
+            //if (db.UpdateEmail((int)Session["User"], user.Email))
+            //{
+            //    ViewBag.Error = null;
+            //    return RedirectToAction("ViewUserData");
+            //}
+            //else
+            //{
+            //    ViewBag.Error = "Adatbázis hiba történt!";
+            //    return View("ViewUserData");
+            //}
         }
 
         public ActionResult UpdateStyle()
         {
             ViewBag.Error = null;
-            return View(new UpdateStyleViewModel 
+            return View(new UpdateStyleViewModel
             {
-                Styles = db.GetStyles()
+                Styles = _context.Styles.ToList()
             });
         }
 
@@ -96,20 +123,26 @@ namespace NutritionWatcher.Controllers
         {
             if (!ModelState.IsValid) 
             {
-                vm.Styles = db.GetStyles();
+                vm.Styles = _context.Styles.ToList();//db.GetStyles();
                 return View("UpdateStyle", vm); 
             }
 
-            if (db.UpdateStyle((int)Session["User"], vm.StyleId))
-            {
-                ViewBag.Error = null;
-                return RedirectToAction("ViewUserData");
-            }
-            else
-            {
-                ViewBag.Error = "Adatbázis hiba történt!";
-                return View("ViewUserData");
-            }
+            int id = (int)Session["User"];
+            _context.NWUsers.Include(x => x.Style).SingleOrDefault(x => x.Id.Equals(id)).Style = _context.Styles.SingleOrDefault(x => x.Id.Equals(vm.StyleId));
+            _context.SaveChanges();
+
+            return RedirectToAction("ViewUserData");
+
+            //if (db.UpdateStyle((int)Session["User"], vm.StyleId))
+            //{
+            //    ViewBag.Error = null;
+            //    return RedirectToAction("ViewUserData");
+            //}
+            //else
+            //{
+            //    ViewBag.Error = "Adatbázis hiba történt!";
+            //    return View("ViewUserData");
+            //}
         }
 
         public ActionResult UpdatePassword()
@@ -122,18 +155,24 @@ namespace NutritionWatcher.Controllers
         {
             if (!ModelState.IsValid) return View("UpdatePassword", vm);
 
-            if (db.Hash(vm.Password) == db.GetUserById((int)Session["User"]).Password) 
+            int id = (int)Session["User"];
+            if (Hash(vm.Password) == _context.NWUsers.SingleOrDefault(x => x.Id.Equals(id)).Password)//db.GetUserById((int)Session["User"]).Password) 
             {
-                if (db.UpdatePassword((int)Session["User"], vm.NewPassword))
-                {
-                    ViewBag.Error = null;
-                    return RedirectToAction("ViewUserData");
-                }
-                else
-                {
-                    ViewBag.Error = "Adatbázis hiba történt!";
-                    return View("ViewUserData");
-                }
+                _context.NWUsers.SingleOrDefault(x => x.Id.Equals(id)).Password = Hash(vm.NewPassword);
+                _context.SaveChanges();
+
+                return RedirectToAction("ViewUserData");
+
+                //if (db.UpdatePassword((int)Session["User"], vm.NewPassword))
+                //{
+                //    ViewBag.Error = null;
+                //    return RedirectToAction("ViewUserData");
+                //}
+                //else
+                //{
+                //    ViewBag.Error = "Adatbázis hiba történt!";
+                //    return View("ViewUserData");
+                //}
             }
             else
             {
@@ -146,20 +185,27 @@ namespace NutritionWatcher.Controllers
         public ActionResult DeleteUser()
         {
             ViewBag.Error = null;
-            return View(db.GetUserById((int)Session["User"]));
+            int id = (int)Session["User"];
+            return View(_context.NWUsers.SingleOrDefault(x => x.Id.Equals(id)));
         }
 
         public RedirectToRouteResult DeleteUserDB(int userId)
         {
-            if (db.DeleteUser(userId))
-            {
-                return RedirectToAction("Logout");
-            }
-            else
-            {
-                ViewBag.Error = "Adatbázis hiba történt!";
-                return RedirectToAction("DeleteUser");
-            }
+            int id = (int)Session["User"];
+            _context.NWUsers.Remove(_context.NWUsers.SingleOrDefault(x => x.Id.Equals(id)));
+            _context.SaveChanges();
+
+            return RedirectToAction("Logout");
+
+            //if (db.DeleteUser(userId))
+            //{
+            //    return RedirectToAction("Logout");
+            //}
+            //else
+            //{
+            //    ViewBag.Error = "Adatbázis hiba történt!";
+            //    return RedirectToAction("DeleteUser");
+            //}
         }
 
         public ActionResult Login()
@@ -176,7 +222,8 @@ namespace NutritionWatcher.Controllers
                 return View("Login", user);
             }
 
-            UserModel loggedIn = db.GetUser(user);
+            string hash = Hash(user.Password);
+            UserModel loggedIn = _context.NWUsers.SingleOrDefault(x => x.Username.Equals(user.Username) && x.Password.Equals(hash));
             if (loggedIn == null)
             {
                 ViewBag.Error = "Sikertelen bejelentkezés!";
@@ -218,16 +265,35 @@ namespace NutritionWatcher.Controllers
                 return View("Registration", user);
             }
 
-            if (db.InsertUser(user))
+            _context.NWUsers.Add(new UserModel
             {
-                ViewBag.Error = null;
-                return RedirectToAction("Login");
-            }
-            else
-            {
-                ViewBag.Error = "Adatbázis hiba történt!";
-                return View("Registration");
-            }
+                Username = user.Username,
+                Firstname = user.Firstname,
+                Lastname = user.Lastname,
+                Password = Hash(user.Password),
+                Email = user.Email,
+                Permission = (from x in _context.Permissions where x.Name.Equals("member") select x).FirstOrDefault(),
+                Style = (from x in _context.Styles where x.Name.Equals("light") select x).FirstOrDefault() 
+            });
+            _context.SaveChanges();
+
+            return RedirectToAction("Login");
+
+            //if (db.InsertUser(user))
+            //{
+            //    ViewBag.Error = null;
+            //    return RedirectToAction("Login");
+            //}
+            //else
+            //{
+            //    ViewBag.Error = "Adatbázis hiba történt!";
+            //    return View("Registration");
+            //}
+        }
+
+        string Hash(string a)
+        {
+            return a.GetHashCode() > 0 ? (a.GetHashCode() << 5).GetHashCode().ToString() : (a.GetHashCode() >> 5).GetHashCode().ToString();
         }
     }
 }

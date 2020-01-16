@@ -1,12 +1,14 @@
 ﻿using NutritionWatcher.Models;
 using System.Web.Mvc;
 using System.Collections.Generic;
+using System.Linq;
+using System.Data.Entity;
 
 namespace NutritionWatcher.Controllers
 {
     public class ConsumptionController : Controller
     {
-        DataBaseHandler db = new DataBaseHandler();
+        ApplicationDbContext _context = new ApplicationDbContext();
 
         // GET: Consumption
         public ActionResult Insert()
@@ -21,21 +23,31 @@ namespace NutritionWatcher.Controllers
         {
             if (!ModelState.IsValid) return View("Insert", consumption);
 
-            if (db.InsertConsumption(consumption, (int)Session["User"]))
-            {
-                ViewBag.Error = null;
-                return RedirectToAction("ShowConsumptions");
-            }
-            else
-            {
-                ViewBag.Error = "Adatbázis hiba történt!";
-                return View("ShowConsumptions");
-            }
+            int id = (int)Session["User"];
+            UserModel user = _context.NWUsers.SingleOrDefault(x => x.Id.Equals(id));
+            consumption.User = user;
+
+            _context.Consumptions.Add(consumption);
+            _context.SaveChanges();
+
+            return RedirectToAction("ShowConsumptions");
+
+            //if (db.InsertConsumption(consumption, (int)Session["User"]))
+            //{
+            //    ViewBag.Error = null;
+            //    return RedirectToAction("ShowConsumptions");
+            //}
+            //else
+            //{
+            //    ViewBag.Error = "Adatbázis hiba történt!";
+            //    return View("ShowConsumptions");
+            //}
         }
 
         public ActionResult Update(int id)
         {
-            ConsumptionModel consumption = db.GetConsumptionById(id);
+            //ConsumptionModel consumption = db.GetConsumptionById(id);
+            ConsumptionModel consumption = _context.Consumptions.Include(x => x.User).SingleOrDefault(x => x.Id.Equals(id));
             if (consumption != null)
             {
                 ViewBag.Error = null;
@@ -52,21 +64,28 @@ namespace NutritionWatcher.Controllers
         {
             if (!ModelState.IsValid) return View("Update", consumption);
 
-            if (db.UpdateConsumption(consumption))
-            {
-                ViewBag.Error = null;
-                return RedirectToAction("ShowConsumptions");
-            }
-            else
-            {
-                ViewBag.Error = "Adatbázis hiba történt!";
-                return View("Update", new { id = consumption.Id});
-            }
+            ConsumptionModel conInDb = _context.Consumptions.SingleOrDefault(x => x.Id.Equals(consumption.Id));
+            conInDb.Date = consumption.Date;
+            conInDb.Time = consumption.Time;
+            _context.SaveChanges();
+
+            return RedirectToAction("ShowConsumptions");
+
+            //if (db.UpdateConsumption(consumption))
+            //{
+            //    ViewBag.Error = null;
+            //    return RedirectToAction("ShowConsumptions");
+            //}
+            //else
+            //{
+            //    ViewBag.Error = "Adatbázis hiba történt!";
+            //    return View("Update", new { id = consumption.Id});
+            //}
         }
 
         public ActionResult Delete(int id)
         {
-            ConsumptionModel consumption = db.GetConsumptionById(id);
+            ConsumptionModel consumption = _context.Consumptions.SingleOrDefault(x => x.Id.Equals(id)); //db.GetConsumptionById(id);
 
             if (consumption != null)
             {
@@ -80,23 +99,29 @@ namespace NutritionWatcher.Controllers
             }
         }
 
-        public RedirectToRouteResult DeleteDataBase(ConsumptionModel consumption)
+        public RedirectToRouteResult DeleteDataBase(int id)
         {
-            if (db.DeleteConsumption(consumption))
-            {
-                ViewBag.Error = null;
-                return RedirectToAction("ShowConsumptions");
-            }
-            else
-            {
-                ViewBag.Error = "Adatbázis hiba történt!";
-                return RedirectToAction("ShowConsumption", new { id = consumption.Id});
-            }
+            _context.Consumptions.Remove(_context.Consumptions.SingleOrDefault(x => x.Id.Equals(id)));
+            _context.SaveChanges();
+
+            return RedirectToAction("ShowConsumptions");
+
+            //if (db.DeleteConsumption(consumption))
+            //{
+            //    ViewBag.Error = null;
+            //    return RedirectToAction("ShowConsumptions");
+            //}
+            //else
+            //{
+            //    ViewBag.Error = "Adatbázis hiba történt!";
+            //    return RedirectToAction("ShowConsumption", new { id = consumption.Id});
+            //}
         }
 
         public ActionResult ShowConsumptions()
         {
-            List<ConsumptionModel> consumptions = db.GetConsumptions((int)Session["User"]);
+            int id = (int)Session["User"];
+            List<ConsumptionModel> consumptions = _context.Consumptions.Include(x => x.User).ToList().FindAll(x => x.User.Id.Equals(id)); //db.GetConsumptions((int)Session["User"]);
             if (consumptions != null)
             {
                 return View(consumptions);
@@ -109,7 +134,7 @@ namespace NutritionWatcher.Controllers
 
         public ActionResult ShowConsumption(int id)
         {
-            ConsumptionModel consumption = db.GetConsumptionById(id);
+            ConsumptionModel consumption = _context.Consumptions.SingleOrDefault(x => x.Id.Equals(id)); //db.GetConsumptionById(id);
 
             if (consumption != null)
             {
@@ -125,10 +150,11 @@ namespace NutritionWatcher.Controllers
 
         public ActionResult Assignment()
         {
+            int id = (int)Session["User"];
             ConsumptionAssignmentViewModel viewModel = new ConsumptionAssignmentViewModel
             {
-                Foods = db.GetFoods(),
-                Consumptions = db.GetConsumptions((int)Session["User"]),
+                Foods = _context.Foods.ToList(), //db.GetFoods(),
+                Consumptions = _context.Consumptions.Include(x => x.User).ToList().FindAll(x => x.User.Id.Equals(id)), //db.GetConsumptions((int)Session["User"]),
                 Gramm = 0
             };
 
@@ -144,29 +170,40 @@ namespace NutritionWatcher.Controllers
 
         public ActionResult AssignmentDataBase(ConsumptionAssignmentViewModel vm)
         {
+            int id = (int)Session["User"];
             if (!ModelState.IsValid)
             {
-                vm.Consumptions = db.GetConsumptions((int)Session["User"]);
-                vm.Foods = db.GetFoods();
+                vm.Consumptions = _context.Consumptions.Include(x => x.User).ToList().FindAll(x => x.User.Id.Equals(id)); //db.GetConsumptions((int)Session["User"]);
+                vm.Foods = _context.Foods.ToList(); //db.GetFoods();
                 return View("Assignment", vm);
             }
-            
-            if (db.AssignConsumption(vm))
+
+            _context.CalorieViewModels.Add(new CalorieViewModel
             {
-                ViewBag.Error = null;
-                return RedirectToAction("ShowConsumptions");
-            }
-            else
-            {
-                ViewBag.Error = "Adatbázis hiba történt!";
-                return RedirectToAction("ShowConsumptions");
-            }
-            
+                ConsumedGramms = vm.Gramm,
+                Consumption = _context.Consumptions.SingleOrDefault(x => x.Id.Equals(vm.ConsumptionId)),
+                Food = _context.Foods.SingleOrDefault(x => x.Id.Equals(vm.FoodId))
+            });
+            _context.SaveChanges();
+
+            return RedirectToAction("ShowConsumptions");
+
+            //if (db.AssignConsumption(vm))
+            //{
+            //    ViewBag.Error = null;
+            //    return RedirectToAction("ShowConsumptions");
+            //}
+            //else
+            //{
+            //    ViewBag.Error = "Adatbázis hiba történt!";
+            //    return RedirectToAction("ShowConsumptions");
+            //}
         }
 
         public ActionResult ShowAssignments(int id)
         {
-            List<CalorieViewModel> vm = db.GetCalorieViewModelsByConsumptionId((int)Session["User"], id);
+            int userid = (int)Session["User"];
+            List<CalorieViewModel> vm = _context.CalorieViewModels.Include(x => x.Consumption).Include(x => x.Consumption.User).Include(x => x.Food).ToList().FindAll(x => x.Consumption.User.Id.Equals(userid)); //db.GetCalorieViewModelsByConsumptionId((int)Session["User"], id);
 
             if (vm != null)
             {
@@ -182,16 +219,21 @@ namespace NutritionWatcher.Controllers
 
         public RedirectToRouteResult DeleteAssignment(int assignId, int consumptionId)
         {
-            if (db.DeleteAssignment(assignId))
-            {
-                ViewBag.Error = null;
-                return RedirectToAction("ShowAssignments", new { id = consumptionId });
-            }
-            else
-            {
-                ViewBag.Error = "Adatbázis hiba történt!";
-                return RedirectToAction("ShowAssignments", new { id = consumptionId });
-            }
+            _context.CalorieViewModels.Remove(_context.CalorieViewModels.SingleOrDefault(x => x.Id.Equals(assignId)));
+            _context.SaveChanges();
+
+            return RedirectToAction("ShowAssignments", new { id = consumptionId });
+
+            //if (db.DeleteAssignment(assignId))
+            //{
+            //    ViewBag.Error = null;
+            //    return RedirectToAction("ShowAssignments", new { id = consumptionId });
+            //}
+            //else
+            //{
+            //    ViewBag.Error = "Adatbázis hiba történt!";
+            //    return RedirectToAction("ShowAssignments", new { id = consumptionId });
+            //}
         }
     }
 }
