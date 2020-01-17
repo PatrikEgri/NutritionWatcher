@@ -192,6 +192,7 @@ namespace NutritionWatcher.Controllers
         public RedirectToRouteResult DeleteUserDB(int userId)
         {
             int id = (int)Session["User"];
+            _context.Consumptions.Include(x => x.User).ToList().RemoveAll(x => x.User.Equals(_context.NWUsers.FirstOrDefault(y => y.Id.Equals(id))));
             _context.NWUsers.Remove(_context.NWUsers.SingleOrDefault(x => x.Id.Equals(id)));
             _context.SaveChanges();
 
